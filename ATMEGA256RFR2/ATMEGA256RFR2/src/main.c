@@ -1,40 +1,29 @@
-/**
- * \file
- *
- * \brief Empty user application template
- *
- */
-
-/**
- * \mainpage User Application template doxygen documentation
- *
- * \par Empty user application template
- *
- * Bare minimum empty user application template
- *
- * \par Content
- *
- * -# Include the ASF header files (through asf.h)
- * -# "Insert system clock initialization code here" comment
- * -# Minimal main function that starts with a call to board_init()
- * -# "Insert application code here" comment
- *
- */
-
 /*
- * Include header files for all drivers that have been imported from
- * Atmel Software Framework (ASF).
- */
-/*
- * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
- */
-#include <asf.h>
+ * 
+ */ 
+#include "../includes/temperature.h"
 
-int main (void)
+#include <stdint-gcc.h>
+#include <sysclk.h>
+#include <avr/interrupt.h>
+#include <stdio.h>
+#include <atmega256rfr2_xplained_pro/atmega256rfr2_xplained_pro.h>
+#include <atmega256rfr2_xplained_pro/led.h>
+
+int main(void)
 {
-	/* Insert system clock initialization code here (sysclk_init()). */
-
+	sysclk_init();
 	board_init();
-
-	/* Insert application code here, after the board has been initialized. */
+	TWI_init();
+	//AT30TSE758_init();
+	
+	sei(); // Enable global interrupts
+	short temp=5;
+    while(1)
+    {
+		if (temp != getTemperature()){
+			temp = getTemperature();
+			LED_Toggle(0);
+		}	
+    }
 }
