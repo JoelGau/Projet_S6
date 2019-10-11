@@ -1,33 +1,29 @@
 /*
  * 
  */ 
-
-
-#include "../includes/miscellaneous.h"
 #include "../includes/temperature.h"
 
 #include <stdint-gcc.h>
+#include <sysclk.h>
 #include <avr/interrupt.h>
 #include <stdio.h>
+#include <atmega256rfr2_xplained_pro/atmega256rfr2_xplained_pro.h>
+#include <atmega256rfr2_xplained_pro/led.h>
 
 int main(void)
 {
-	Board_Init();
-	Timer_Init();
+	sysclk_init();
+	board_init();
 	TWI_init();
+	//AT30TSE758_init();
 	
 	sei(); // Enable global interrupts
 	short temp=5;
-	short i;
     while(1)
     {
-		// Wait 0.5 seconds
 		if (temp != getTemperature()){
 			temp = getTemperature();
-			LED_Toggle;
-		}
-		for(i=0; i<250; i++){
-			Delay(50000); //us
-		}		
+			LED_Toggle(0);
+		}	
     }
 }

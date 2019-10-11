@@ -10,6 +10,7 @@
 #define TEMPERATURE_H_
 
 void TWI_init();
+void AT30TSE758_init();
 short getTemperature();
 
 #endif /* TEMPERATURE_H_ */
