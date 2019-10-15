@@ -11,6 +11,7 @@
 
 void TWI_init();
 void AT30TSE758_init();
-short getTemperature();
+short getTemperatureRaw();
+void getTemperatureCelsius(short* celsius);
 
 #endif /* TEMPERATURE_H_ */

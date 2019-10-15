@@ -271,6 +271,12 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="includes\at30ts.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\conf_at30ts.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="includes\temperature.h">
       <SubType>compile</SubType>
     </Compile>
@@ -286,6 +292,9 @@
     <None Include="src\ASF\common\services\twi\twi_slave.h">
       <SubType>compile</SubType>
     </None>
+    <Compile Include="src\at30ts.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\main.c">
       <SubType>compile</SubType>
     </Compile>
