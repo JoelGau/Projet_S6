@@ -47,8 +47,16 @@ const uint8_t AT30TSE758_TempRead [SLAVE_MEM_ADDR_LENGTH] = {
 	attach_device(0x96,AT30TSE758);
  }
 
- short getTemperature() {
+ short getTemperatureRaw() {
 	sensor_data_t data;
 	read_temperature(&data);
 	return data.temperature.raw_value;
+ }
+ 
+ void getTemperatureCelsius(short celsius[3]){
+	sensor_data_t data;
+	read_temperature(&data);
+	celsius[0] = (uint16_t) data.temperature.sign;
+	celsius[1] = (uint16_t) data.temperature.itemp;
+	celsius[2] = data.temperature.ftemp;
  }

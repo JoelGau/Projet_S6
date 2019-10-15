@@ -19,14 +19,10 @@ int main(void)
 	TWI_init();
 	
 	sei(); // Enable global interrupts
-	uint16_t temp=5;
-	sensor_data_t data;
+	short temp[3] = {0,0,0};
     while(1)
     {
-		//read_temperature(&data);
-		if (temp != getTemperature()){
-			temp = getTemperature();
-		}
+		getTemperatureCelsius(temp);
 		delay_ms(250);
     }
 }
