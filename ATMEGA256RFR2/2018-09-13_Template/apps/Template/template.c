@@ -47,7 +47,16 @@
 /*- Includes ---------------------------------------------------------------*/
 #include "sys.h"
 #include "phy.h"
+#include "astudio/includes/temperature.h"
+#include "astudio/includes/at30ts.h"
+
+#include <stdint-gcc.h>
+#include <delay.h>
+#include <sysclk.h>
+#include <avr/interrupt.h>
 #include <stdio.h>
+#include <atmega256rfr2_xplained_pro/atmega256rfr2_xplained_pro.h>
+#include <atmega256rfr2_xplained_pro/led.h>
 #include <stdarg.h>
 
 /*- Definitions ------------------------------------------------------------*/
@@ -114,18 +123,23 @@ static void APP_TaskHandler(void)
 *****************************************************************************/
 int main(void)
 {
-  SYS_Init();
+	SYS_Init();
+	sysclk_init();
+	board_init();
+	TWI_init();
+	
+	sei(); // Enable global interrupts
+	short temp[3] = {0,0,0};
    
-  while (1)
-  {
-    PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-    APP_TaskHandler(); //l'application principale roule ici
-  }
+	while (1)
+	{
+		getTemperatureCelsius(temp);
+		Ecris_UART_string()
+		delay_ms(250);
+		PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+		APP_TaskHandler(); //l'application principale roule ici
+	}
 }
-
-
-
-
 
 
 
