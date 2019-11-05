@@ -58,6 +58,10 @@
 #include <atmega256rfr2_xplained_pro/atmega256rfr2_xplained_pro.h>
 #include <atmega256rfr2_xplained_pro/led.h>
 #include <stdarg.h>
+//#include <string> 
+
+
+	
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
@@ -95,6 +99,7 @@ static void APP_TaskHandler(void)
   if(receivedUart)		//est-ce qu'un caractere a été recu par l'UART?
   {
 	  Ecris_UART(receivedUart);	//envoie l'echo du caractere recu par l'UART
+	  Ecris_UART_string("\r\n Nom: ",999);
 
 	  if(receivedUart == 'a')	//est-ce que le caractere recu est 'a'? 
 		{
@@ -103,10 +108,6 @@ static void APP_TaskHandler(void)
 		}
   }
 
-
-
-
-  
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
 	char buf[196];
@@ -123,19 +124,19 @@ static void APP_TaskHandler(void)
 *****************************************************************************/
 int main(void)
 {
-	SYS_Init();
-	sysclk_init();
+	//sysclk_init();
 	board_init();
 	TWI_init();
-	
 	sei(); // Enable global interrupts
 	short temp[3] = {0,0,0};
+		
+	SYS_Init();
    
 	while (1)
 	{
-		getTemperatureCelsius(temp);
-		Ecris_UART_string()
-		delay_ms(250);
+		//getTemperatureCelsius(temp);
+		//delay_ms(250);
+	
 		PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
 		APP_TaskHandler(); //l'application principale roule ici
 	}
@@ -155,19 +156,6 @@ PHY_Init(); //initialise le wireless
 PHY_SetRxState(1); //TRX_CMD_RX_ON
 }
 //
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
