@@ -8,10 +8,6 @@
 
 src\at30ts.c
 
-src\Formulaire\Form.c
-
-src\Formulaire\Patient.c
-
 src\temperature.c
 
 src\ASF\common\services\clock\mega\sysclk.c

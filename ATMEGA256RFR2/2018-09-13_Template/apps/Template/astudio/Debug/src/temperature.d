@@ -35,8 +35,6 @@ src/temperature.d src/temperature.o: ../src/temperature.c \
  ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/mega/ioport.h \
  ../src/../includes/conf_at30ts.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  ../src/ASF/common/services/twi/twi_slave.h \
  ../src/ASF/common/services/twi/megarf_twi/twi_slave.h \
  ../src/ASF/common/services/delay/delay.h \
@@ -126,10 +124,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/ASF/common/services/ioport/mega/ioport.h:
 
 ../src/../includes/conf_at30ts.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:
 
 ../src/ASF/common/services/twi/twi_slave.h:
 

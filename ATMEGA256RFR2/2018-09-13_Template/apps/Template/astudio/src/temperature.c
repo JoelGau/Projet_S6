@@ -7,10 +7,6 @@
 
  #include "../includes/temperature.h"
  #include "../includes/at30ts.h"
- 
- #include <string.h>
- #include <stdlib.h>
- #include <stdio.h>
 
  #include <twi_master.h>
  #include <twi_megarf.h>
@@ -63,19 +59,4 @@ const uint8_t AT30TSE758_TempRead [SLAVE_MEM_ADDR_LENGTH] = {
 	celsius[0] = (uint16_t) data.temperature.sign;
 	celsius[1] = (uint16_t) data.temperature.itemp;
 	celsius[2] = data.temperature.ftemp;
- }
- 
- void getTemperatureCelsiusStd(float* celsius)
- {
-	 sensor_data_t data;
-	 read_temperature(&data);
-	 int tempVal = 0;
-	 if((uint16_t) data.temperature.sign < 0)
-		 tempVal = 0 - (uint16_t) data.temperature.itemp;
-	 else
-		 tempVal = (uint16_t) data.temperature.itemp;
-	 
-	 char tempString[40];
-	 sprintf(tempString, "%d.%d",tempVal,(uint16_t)data.temperature.ftemp);
-	 float decimalVal = atof(tempString); 
  }
