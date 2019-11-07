@@ -793,7 +793,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x11a8
+.text           0x00000000     0x1198
  *(.vectors)
  .vectors       0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
                 0x00000000                __vector_default
@@ -969,58 +969,55 @@ END GROUP
  .text.SYS_Init
                 0x000005b8       0x26 template.o
                 0x000005b8                SYS_Init
- .text.envoi_wireless
-                0x000005de       0x5e template.o
-                0x000005de                envoi_wireless
- .text.main     0x0000063c       0xbc template.o
-                0x0000063c                main
+ .text.main     0x000005de      0x10a template.o
+                0x000005de                main
  .text.attach_device
-                0x000006f8       0x5c src/at30ts.o
-                0x000006f8                attach_device
+                0x000006e8       0x5c src/at30ts.o
+                0x000006e8                attach_device
  .text.__portable_avr_delay_cycles
-                0x00000754       0x16 src/temperature.o
+                0x00000744       0x16 src/temperature.o
  .text.TWI_init
-                0x0000076a       0x6c src/temperature.o
-                0x0000076a                TWI_init
+                0x0000075a       0x6c src/temperature.o
+                0x0000075a                TWI_init
  .text.sysclk_enable_module
-                0x000007d6       0x30 src/ASF/common/services/clock/mega/sysclk.o
-                0x000007d6                sysclk_enable_module
+                0x000007c6       0x30 src/ASF/common/services/clock/mega/sysclk.o
+                0x000007c6                sysclk_enable_module
  .text.board_init
-                0x00000806        0xa src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
-                0x00000806                board_init
+                0x000007f6        0xa src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+                0x000007f6                board_init
  .text.twi_master_bus_reset
-                0x00000810       0x12 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x00000800       0x12 src/ASF/mega/drivers/twi/twi_megarf.o
  .text.twi_master_init
-                0x00000822       0x26 src/ASF/mega/drivers/twi/twi_megarf.o
-                0x00000822                twi_master_init
+                0x00000812       0x26 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x00000812                twi_master_init
  .text.__vector_39
-                0x00000848      0x3a2 src/ASF/mega/drivers/twi/twi_megarf.o
-                0x00000848                __vector_39
- .text.libgcc   0x00000bea       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_tablejump2.o)
-                0x00000bea                __tablejump2__
+                0x00000838      0x3a2 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x00000838                __vector_39
+ .text.libgcc   0x00000bda       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_tablejump2.o)
+                0x00000bda                __tablejump2__
  .text.avr-libc
-                0x00000bfa       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(vsprintf.o)
-                0x00000bfa                vsprintf
+                0x00000bea       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(vsprintf.o)
+                0x00000bea                vsprintf
  .text.avr-libc
-                0x00000c4a      0x3fa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(vfprintf_std.o)
-                0x00000c4a                vfprintf
+                0x00000c3a      0x3fa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(vfprintf_std.o)
+                0x00000c3a                vfprintf
  .text.avr-libc
-                0x00001044       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(strnlen_P.o)
-                0x00001044                strnlen_P
+                0x00001034       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(strnlen_P.o)
+                0x00001034                strnlen_P
  .text.avr-libc
-                0x0000105a       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(strnlen.o)
-                0x0000105a                strnlen
+                0x0000104a       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(strnlen.o)
+                0x0000104a                strnlen
  .text.avr-libc
-                0x00001070       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(fputc.o)
-                0x00001070                fputc
+                0x00001060       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(fputc.o)
+                0x00001060                fputc
  .text.avr-libc
-                0x000010e8       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(ultoa_invert.o)
-                0x000010e8                __ultoa_invert
-                0x000011a4                . = ALIGN (0x2)
+                0x000010d8       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(ultoa_invert.o)
+                0x000010d8                __ultoa_invert
+                0x00001194                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000011a4        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
-                0x000011a4                _exit
-                0x000011a4                exit
+ .fini9         0x00001194        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
+                0x00001194                _exit
+                0x00001194                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1039,11 +1036,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000011a4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
+ .fini0         0x00001194        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
  *(.fini0)
-                0x000011a8                _etext = .
+                0x00001198                _etext = .
 
-.data           0x00800200       0x28 load address 0x000011a8
+.data           0x00800200       0x28 load address 0x00001198
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -1090,8 +1087,8 @@ END GROUP
                 0x008002c7                receivedWireless
                 0x008002c8                buff_nom
                 0x008002dc                PROVIDE (__bss_end, .)
-                0x000011a8                __data_load_start = LOADADDR (.data)
-                0x000011d0                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00001198                __data_load_start = LOADADDR (.data)
+                0x000011c0                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x008002dc        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -1172,96 +1169,96 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x290
+.debug_aranges  0x00000000      0x288
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x60 stack/phy/atmegarfr2/src/phy.o
  .debug_aranges
-                0x00000060       0x60 template.o
+                0x00000060       0x58 template.o
  .debug_aranges
-                0x000000c0       0xd8 src/at30ts.o
+                0x000000b8       0xd8 src/at30ts.o
  .debug_aranges
-                0x00000198       0x38 src/temperature.o
+                0x00000190       0x38 src/temperature.o
  .debug_aranges
-                0x000001d0       0x30 src/ASF/common/services/clock/mega/sysclk.o
+                0x000001c8       0x30 src/ASF/common/services/clock/mega/sysclk.o
  .debug_aranges
-                0x00000200       0x20 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+                0x000001f8       0x20 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
  .debug_aranges
-                0x00000220       0x70 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x00000218       0x70 src/ASF/mega/drivers/twi/twi_megarf.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x496b
+.debug_info     0x00000000     0x4949
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x13e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_info    0x000013e6      0x6ab stack/phy/atmegarfr2/src/phy.o
- .debug_info    0x00001a91      0x553 template.o
- .debug_info    0x00001fe4     0x1185 src/at30ts.o
- .debug_info    0x00003169      0x822 src/temperature.o
- .debug_info    0x0000398b      0x2b5 src/ASF/common/services/clock/mega/sysclk.o
- .debug_info    0x00003c40      0x282 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_info    0x00003ec2      0xaa9 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_info    0x00001a91      0x531 template.o
+ .debug_info    0x00001fc2     0x1185 src/at30ts.o
+ .debug_info    0x00003147      0x822 src/temperature.o
+ .debug_info    0x00003969      0x2b5 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_info    0x00003c1e      0x282 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_info    0x00003ea0      0xaa9 src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_abbrev   0x00000000     0x239c
+.debug_abbrev   0x00000000     0x23c3
  *(.debug_abbrev)
  .debug_abbrev  0x00000000     0x12d6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_abbrev  0x000012d6      0x26c stack/phy/atmegarfr2/src/phy.o
- .debug_abbrev  0x00001542      0x27b template.o
- .debug_abbrev  0x000017bd      0x344 src/at30ts.o
- .debug_abbrev  0x00001b01      0x2df src/temperature.o
- .debug_abbrev  0x00001de0      0x1a6 src/ASF/common/services/clock/mega/sysclk.o
- .debug_abbrev  0x00001f86      0x149 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_abbrev  0x000020cf      0x2cd src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_abbrev  0x00001542      0x2a2 template.o
+ .debug_abbrev  0x000017e4      0x344 src/at30ts.o
+ .debug_abbrev  0x00001b28      0x2df src/temperature.o
+ .debug_abbrev  0x00001e07      0x1a6 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_abbrev  0x00001fad      0x149 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_abbrev  0x000020f6      0x2cd src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_line     0x00000000     0x374e
+.debug_line     0x00000000     0x3729
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x271 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_line    0x00000271      0x512 stack/phy/atmegarfr2/src/phy.o
- .debug_line    0x00000783      0x9ba template.o
- .debug_line    0x0000113d      0xc48 src/at30ts.o
- .debug_line    0x00001d85      0x784 src/temperature.o
- .debug_line    0x00002509      0x597 src/ASF/common/services/clock/mega/sysclk.o
- .debug_line    0x00002aa0      0x479 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_line    0x00002f19      0x835 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_line    0x00000783      0x995 template.o
+ .debug_line    0x00001118      0xc48 src/at30ts.o
+ .debug_line    0x00001d60      0x784 src/temperature.o
+ .debug_line    0x000024e4      0x597 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_line    0x00002a7b      0x479 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_line    0x00002ef4      0x835 src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_frame    0x00000000      0x708
+.debug_frame    0x00000000      0x6d8
  *(.debug_frame)
  .debug_frame   0x00000000       0xb4 stack/phy/atmegarfr2/src/phy.o
- .debug_frame   0x000000b4      0x104 template.o
- .debug_frame   0x000001b8      0x310 src/at30ts.o
- .debug_frame   0x000004c8       0x9c src/temperature.o
- .debug_frame   0x00000564       0x74 src/ASF/common/services/clock/mega/sysclk.o
- .debug_frame   0x000005d8       0x24 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_frame   0x000005fc      0x10c src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_frame   0x000000b4       0xd4 template.o
+ .debug_frame   0x00000188      0x310 src/at30ts.o
+ .debug_frame   0x00000498       0x9c src/temperature.o
+ .debug_frame   0x00000534       0x74 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_frame   0x000005a8       0x24 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_frame   0x000005cc      0x10c src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_str      0x00000000    0x1b75c
+.debug_str      0x00000000    0x1b75b
  *(.debug_str)
  .debug_str     0x00000000      0x7f7 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_str     0x000007f7     0xf939 stack/phy/atmegarfr2/src/phy.o
                                0xfa9c (size before relaxing)
- .debug_str     0x00010130     0xa21a template.o
-                              0x18a89 (size before relaxing)
- .debug_str     0x0001a34a      0x693 src/at30ts.o
+ .debug_str     0x00010130     0xa219 template.o
+                              0x18a88 (size before relaxing)
+ .debug_str     0x0001a349      0x693 src/at30ts.o
                               0x17921 (size before relaxing)
- .debug_str     0x0001a9dd      0x594 src/temperature.o
+ .debug_str     0x0001a9dc      0x594 src/temperature.o
                               0x18495 (size before relaxing)
- .debug_str     0x0001af71       0xa0 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_str     0x0001af70       0xa0 src/ASF/common/services/clock/mega/sysclk.o
                               0x16ac6 (size before relaxing)
- .debug_str     0x0001b011      0x165 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_str     0x0001b010      0x165 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
                               0x167ec (size before relaxing)
- .debug_str     0x0001b176      0x5e6 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_str     0x0001b175      0x5e6 src/ASF/mega/drivers/twi/twi_megarf.o
                               0x16245 (size before relaxing)
 
-.debug_loc      0x00000000     0x1b61
+.debug_loc      0x00000000     0x1ad7
  *(.debug_loc)
  .debug_loc     0x00000000      0x1a2 stack/phy/atmegarfr2/src/phy.o
- .debug_loc     0x000001a2      0x2e6 template.o
- .debug_loc     0x00000488      0xf85 src/at30ts.o
- .debug_loc     0x0000140d      0x18b src/temperature.o
- .debug_loc     0x00001598      0x1f2 src/ASF/common/services/clock/mega/sysclk.o
- .debug_loc     0x0000178a       0x51 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_loc     0x000017db      0x386 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_loc     0x000001a2      0x25c template.o
+ .debug_loc     0x000003fe      0xf85 src/at30ts.o
+ .debug_loc     0x00001383      0x18b src/temperature.o
+ .debug_loc     0x0000150e      0x1f2 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_loc     0x00001700       0x51 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_loc     0x00001751      0x386 src/ASF/mega/drivers/twi/twi_megarf.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1281,15 +1278,15 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x250
+.debug_ranges   0x00000000      0x248
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x50 stack/phy/atmegarfr2/src/phy.o
- .debug_ranges  0x00000050       0x80 template.o
- .debug_ranges  0x000000d0       0xc8 src/at30ts.o
- .debug_ranges  0x00000198       0x28 src/temperature.o
- .debug_ranges  0x000001c0       0x20 src/ASF/common/services/clock/mega/sysclk.o
- .debug_ranges  0x000001e0       0x10 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_ranges  0x000001f0       0x60 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_ranges  0x00000050       0x78 template.o
+ .debug_ranges  0x000000c8       0xc8 src/at30ts.o
+ .debug_ranges  0x00000190       0x28 src/temperature.o
+ .debug_ranges  0x000001b8       0x20 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_ranges  0x000001d8       0x10 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_ranges  0x000001e8       0x60 src/ASF/mega/drivers/twi/twi_megarf.o
 
 .debug_macro    0x00000000     0x7f39
  *(.debug_macro)

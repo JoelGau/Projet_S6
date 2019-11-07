@@ -77,7 +77,6 @@ void Ecris_UART_string(char const * data, ...);
 void init_UART(void);
 void Lis_UART_string(void);
 void SYS_Init(void);
-void envoi_wireless(void);
 void init_buff_nom(void);
 
 
@@ -107,10 +106,23 @@ int debug = 1;
 static void APP_TaskHandler(void)
 {
 	Lis_UART_string(); // lis les informations du clavier, et les met dans la variable global "buff_nom" et incrémente la variable globale "ind_buff"
-	envoi_wireless(); // envoi la variable gloable "buff_nom" et la variable globale "ind_buff"
-
-		
 	
+	// envoi la variable gloable "buff_nom" et la variable globale "ind_buff"
+	if (buff_nom[ind_buff] == 13 && ind_buff > 0)
+	{
+		if (debug)
+		{
+			Ecris_UART_string("\n\r");
+			Ecris_UART_string(buff_nom);
+			Ecris_UART_string("\n\r");
+		}
+		
+		Ecris_Wireless(buff_nom, ind_buff);
+		init_buff_nom();
+	}
+
+
+	// reception d'une chaine de caractere
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
 	uint8_t received_data[20] = {};
@@ -247,20 +259,4 @@ void init_buff_nom(void)
 		buff_nom[i] = 0;
 	}
 	ind_buff = 0;
-}
-
-void envoi_wireless(void)
-{
-	if (buff_nom[ind_buff] == 13 && ind_buff > 0)
-	{
-		if (debug)
-		{
-			Ecris_UART_string("\n\r");
-			Ecris_UART_string(buff_nom);
-			Ecris_UART_string("\n\r");
-		}
-		
-		Ecris_Wireless(buff_nom, ind_buff);
-		init_buff_nom();
-	}
 }
