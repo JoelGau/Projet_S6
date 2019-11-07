@@ -71,18 +71,31 @@
 
 /*- Prototypes -------------------------------------------------------------*/
 // Put your function prototypes here
-char Lis_UART(void);
+char Lis_UART();
 void Ecris_UART(char data);
 void Ecris_UART_string(char const * data, ...);
 void init_UART(void);
+void Lis_UART_string(void);
 void SYS_Init(void);
+void envoi_wireless(void);
+void init_buff_nom(void);
+
+
+
 
 /*- Variables --------------------------------------------------------------*/
 // Put your variables here
 uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet aura été recu via wireless (et copié dans "PHY_DataInd_t ind"
 							//il faut la mettre a 0 apres avoir géré le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jeté
+// PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)					
+char buff_nom[20];
+uint8_t ind_buff = 0;
 
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
+
+
+//debug (0 = pas debug, 1= 
+int debug = 1;
 
 
 /*- Implementations --------------------------------------------------------*/
@@ -93,28 +106,30 @@ PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier
 *****************************************************************************/
 static void APP_TaskHandler(void)
 {
-  char receivedUart = 0;
+	Lis_UART_string(); // lis les informations du clavier, et les met dans la variable global "buff_nom" et incrémente la variable globale "ind_buff"
+	envoi_wireless(); // envoi la variable gloable "buff_nom" et la variable globale "ind_buff"
 
-  receivedUart = Lis_UART();  
-  if(receivedUart)		//est-ce qu'un caractere a été recu par l'UART?
-  {
-	  Ecris_UART(receivedUart);	//envoie l'echo du caractere recu par l'UART
-	  Ecris_UART_string("\r\n Nom: ",999);
-
-	  if(receivedUart == 'a')	//est-ce que le caractere recu est 'a'? 
-		{
-		uint8_t demonstration_string[128] = "123456789A"; //data packet bidon
-		Ecris_Wireless(demonstration_string, 10); //envoie le data packet; nombre d'éléments utiles du paquet à envoyer
-		}
-  }
-
+		
+	
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
-	char buf[196];
+	uint8_t received_data[20] = {};
+	int i = 0;
 
+	// remplir l'array avec les valeurs recues
+	while (i < ind.size)
+	{
+		received_data[i] = ind.data[i];
+		i++;
+	}
+	
+	// affiche le message recu
+	Ecris_UART_string("\n\r");
+	Ecris_UART_string(received_data);
 	Ecris_UART_string( "\n\rnew trame! size: %d, RSSI: %ddBm\n\r", ind.size, ind.rssi );
-	Ecris_UART_string( "contenu: %s", ind.data );	
+	Ecris_UART_string("\n\r");
 	receivedWireless = 0; 
+
   }
 }
 
@@ -129,14 +144,12 @@ int main(void)
 	TWI_init();
 	sei(); // Enable global interrupts
 	short temp[3] = {0,0,0};
-		
 	SYS_Init();
    
 	while (1)
 	{
 		//getTemperatureCelsius(temp);
 		//delay_ms(250);
-	
 		PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
 		APP_TaskHandler(); //l'application principale roule ici
 	}
@@ -149,34 +162,44 @@ int main(void)
 *****************************************************************************/
 void SYS_Init(void)
 {
-receivedWireless = 0;
-wdt_disable(); 
-init_UART();
-PHY_Init(); //initialise le wireless
-PHY_SetRxState(1); //TRX_CMD_RX_ON
+	receivedWireless = 0;
+	wdt_disable(); 
+	init_UART();
+	PHY_Init(); //initialise le wireless
+	PHY_SetRxState(1); //TRX_CMD_RX_ON+
+	init_buff_nom();
 }
 //
 
 
 
-
-
-
-
 //FONCTIONS POUR L'UART
 
-char Lis_UART(void)
+char Lis_UART()
 {
-
 char data = 0; 
-
 
 	if(UCSR1A & (0x01 << RXC1))
 	{
 		data = UDR1;
 	}
-	
 return data;
+}
+
+void Lis_UART_string()
+{
+	char receivedUart = 0;
+
+	receivedUart = Lis_UART(); 
+	if (receivedUart)	{
+		Ecris_UART(receivedUart); // echo vers le terminal
+		buff_nom[ind_buff] = receivedUart;
+		if (receivedUart != 13)
+		{
+			ind_buff++;
+		}
+		receivedUart = 0;
+	}
 }
 
 
@@ -216,4 +239,28 @@ void init_UART(void)
 	UCSR1C = 0x06; //8-bits per character, 1 stop bit
 }
 
+// Fonctions Wireless 
 
+void init_buff_nom(void)
+{
+	for (int i = 0; i < 20; i++) {
+		buff_nom[i] = 0;
+	}
+	ind_buff = 0;
+}
+
+void envoi_wireless(void)
+{
+	if (buff_nom[ind_buff] == 13 && ind_buff > 0)
+	{
+		if (debug)
+		{
+			Ecris_UART_string("\n\r");
+			Ecris_UART_string(buff_nom);
+			Ecris_UART_string("\n\r");
+		}
+		
+		Ecris_Wireless(buff_nom, ind_buff);
+		init_buff_nom();
+	}
+}

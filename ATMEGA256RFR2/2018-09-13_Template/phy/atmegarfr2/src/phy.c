@@ -148,14 +148,17 @@ void PHY_SetTxPower(uint8_t txPower)
 //void PHY_DataReq(uint8_t *data, uint8_t size)
 void Ecris_Wireless(uint8_t *data, uint8_t size) //VR
 {
+	uint8_t i = 0;
   //phyTrxSetState(TRX_CMD_TX_ARET_ON); //VR
   phyTrxSetState(TRX_CMD_PLL_ON); 
   IRQ_STATUS_REG = IRQ_CLEAR_VALUE;
 
   //TRX_FRAME_BUFFER(0) = size + PHY_CRC_SIZE; //VR
   TRX_FRAME_BUFFER(0) = size; //VR
-  for (uint8_t i = 0; i < size; i++)
+  for (i = 0; i < size; i++)
     TRX_FRAME_BUFFER(i+1) = data[i];
+	
+	TRX_FRAME_BUFFER(i+1) = 0x00;
 
   phyState = PHY_STATE_TX_WAIT_END;
   TRX_STATE_REG = TRX_CMD_TX_START;
