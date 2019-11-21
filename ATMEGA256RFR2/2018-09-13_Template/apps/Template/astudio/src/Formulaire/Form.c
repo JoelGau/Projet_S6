@@ -9,6 +9,9 @@
 #include "Patient.h"
 #include "astudio/includes/temperature.h"
 
+//Define FORM_CONSOLE_TEST to 1 when we want to test the console output/interactions
+#define FORM_CONSOLE_TEST 1
+
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
@@ -42,7 +45,53 @@ QuestionForm::QuestionForm(PatientStruct* inputPatient)
 	}
 }*/
 
-void initQuestionForm(QuestionForm *q, PatientStruct *p)
+//How we should use the form in the main
+/*
+void main()
+{
+	//Initialize an empty patient object and the question form.
+	PatientStruct patientInfo;
+	QuestionForm questionForm;
+
+	//Sync the QuestionForm object with the current state of the patient info
+	InitQuestionForm(&questionForm, &patientInfo);
+	//Run the form, which acquires the informations if necessary.
+	RunQuestionForm(&questionForm);
+}
+
+*/
+
+#define OK       0
+#define NO_INPUT 1
+#define TOO_LONG 2
+
+static int getLine (char *prmpt, char *buff, size_t sz) 
+{
+	int ch, extra;
+
+	// Get line with buffer overrun protection.
+	if (prmpt != NULL) {
+		printf ("%s", prmpt);
+		fflush (stdout);
+	}
+	if (fgets (buff, sz, stdin) == NULL)
+	return NO_INPUT;
+
+	// If it was too long, there'll be no newline. In that case, we flush
+	// to end of line so that excess doesn't affect the next call.
+	if (buff[strlen(buff)-1] != '\n') {
+		extra = 0;
+		while (((ch = getchar()) != '\n') && (ch != EOF))
+		extra = 1;
+		return (extra == 1) ? TOO_LONG : OK;
+	}
+
+	// Otherwise remove newline and give string back to caller.
+	buff[strlen(buff)-1] = '\0';
+	return OK;
+}
+
+void InitQuestionForm(QuestionForm *q, PatientStruct *p)
 {
 	//Acquire the patient struct used to create the appropriate form
 	q->initiatorPatient = p;
@@ -93,23 +142,44 @@ unsigned QuestionForm::Run()
 
 void RunQuestionForm(QuestionForm* q)
 {
-	unsigned a,b;
 	if(q->hasPatientInfo)
-		a = 1;
-	//Ecris_wireless_string("Dossier client complet.");
+	{
+		#ifdef FORM_CONSOLE_TEST
+			printf("Dossier client complet.");
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Dossier client complet.");
+		#endif
+	}
 	else
 	{
-		inquirePatientInfo(q);
-		//Ecris_wireless_string("Dossier client remplis.");
+		InquirePatientInfo(q);
+		#ifdef FORM_CONSOLE_TEST
+			printf("Dossier client remplis.");
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Dossier client remplis.");
+		#endif
 	}
 	
 	if(q->hasTemperatureInfo)
-		b = 1;
-	//Ecris_wireless_string("Temperature deja prise (Wut).");
+	{
+		#ifdef FORM_CONSOLE_TEST
+			printf("Temperature deja prise (Wut).");
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Temperature deja prise (Wut).");
+		#endif
+	}
 	else
 	{
-		inquireTemperatureInfo(q);
-		//Ecris_wireless_string("Temperature acquise.");
+		InquireTemperatureInfo(q);
+		#ifdef FORM_CONSOLE_TEST
+			printf("Temperature deja prise (Wut).");
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Temperature acquise.");
+		#endif
 	}
 }
 /*
@@ -181,35 +251,84 @@ void RunQuestionForm(QuestionForm* q)
 	}
 }
 */
-void inquirePatientInfo(QuestionForm* q)
+void InquirePatientInfo(QuestionForm* q)
 {
 	//This function is in charge of acquiring the generic patient information to fill the profile.
 	bool NAMacquired = false;
-	unsigned a,b,c,d;
+	char inputArray[12];
+	int b,c,d;
 	while(!NAMacquired)
 	{
-		//Ecris_wireless_string("Veuillez indiquer votre numero d''assurance maladie:");
-		//Acquire the information
-		char* inputArray = 0;//lis_wireless_string();
+		#ifdef FORM_CONSOLE_TEST
+			int rc = getLine("Veuillez indiquer votre numero d''assurance maladie:", inputArray, sizeof(inputArray));
+			if (rc == NO_INPUT) 
+			{
+				// Extra NL since my system doesn't output that on EOF.
+				printf ("\nNo input\n");
+			}
+
+			if (rc == TOO_LONG)
+			{
+				printf ("Input too long [%s]\n", inputArray);
+			}
+
+			printf ("OK [%s]\n", inputArray);
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Veuillez indiquer votre numero d''assurance maladie:");
+			//inputArray = 0;//lis_wireless_string();
+		#endif
+
+		
 		if(strlen(inputArray) == 12)
 		{
 			strcpy(inputArray,q->initiatorPatient->ID);
 			NAMacquired = true;
 		}
 		else
-			a = 1;
-		//Ecris_wireless_string("Numero invalide.\n");
+		{
+			#ifdef FORM_CONSOLE_TEST
+				printf("Numero invalide.");
+			#endif
+			#ifndef FORM_CONSOLE_TEST
+				a = 1;
+				//Ecris_wireless_string("Numero invalide.\n");
+			#endif
+		}			
 	}
 	
 	bool NameAcquired = false;
 	while(!NameAcquired)
 	{
-		//Ecris_wireless_string("Veuillez indiquer votre nom en caracteres standards:");
 		//Acquire the information
-		char* inputArray = 0;//lis_wireless_string();
-		if(strlen(inputArray) <= 32)
+		/////////////////////////////
+		char inputName[32];
+		#ifdef FORM_CONSOLE_TEST
+			int rc = getLine("Veuillez indiquer votre nom en caracteres standards:", inputName, sizeof(inputName));
+			if (rc == NO_INPUT)
+			{
+				// Extra NL since my system doesn't output that on EOF.
+				printf ("\nNo input\n");
+			}
+
+			if (rc == TOO_LONG)
+			{
+				printf ("Input too long [%s]\n", inputName);
+			}
+
+			printf ("OK [%s]\n", inputName);
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Veuillez indiquer votre nom en caracteres standards:");;
+			//inputArray = 0;//lis_wireless_string();
+		#endif
+
+		/////////////////////////////
+
+		//char* inputArray = 0;//lis_wireless_string();
+		if(strlen(inputName) <= 32)
 		{
-			strcpy(inputArray,q->initiatorPatient->Name);
+			strcpy(inputName,q->initiatorPatient->Name);
 			NameAcquired = true;
 		}
 		else
@@ -220,13 +339,34 @@ void inquirePatientInfo(QuestionForm* q)
 	bool AgeAcquired = false;
 	while(!AgeAcquired)
 	{
-		//Ecris_wireless_string("Veuillez indiquer votre age:");
 		//Acquire the information
-		char* inputArray = 0;//lis_wireless_string();
-		if(strlen(inputArray) <= 3)
+		char inputAge[3];// = lis_wireless_string();
+		///////////////////////////
+		#ifdef FORM_CONSOLE_TEST
+		int rc = getLine("Veuillez indiquer votre age:", inputAge, sizeof(inputAge));
+		if (rc == NO_INPUT)
+		{
+			// Extra NL since my system doesn't output that on EOF.
+			printf ("\nNo input\n");
+		}
+
+		if (rc == TOO_LONG)
+		{
+			printf ("Input too long [%s]\n", inputAge);
+		}
+
+		printf ("OK [%s]\n", inputAge);
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Veuillez indiquer votre age:");
+			//inputAge = 0;//lis_wireless_string();
+		#endif
+		//////////////////////////
+
+		if(strlen(inputAge) <= 3)
 		{
 			unsigned age = 0;
-			sscanf(inputArray,"%d", &age);
+			sscanf(inputAge,"%d", &age);
 			q->initiatorPatient->Age = age;
 			AgeAcquired = true;
 		}
@@ -238,13 +378,35 @@ void inquirePatientInfo(QuestionForm* q)
 	bool WeightAcquired = false;
 	while(!WeightAcquired)
 	{
-		//Ecris_wireless_string("Veuillez indiquer votre poid en entier (lbs):");
+
 		//Acquire the information
-		char* inputArray = 0;//lis_wireless_string();
-		if(strlen(inputArray) <= 3)
+		char inputWeight[4];// = lis_wireless_string();
+		///////////////////////////
+		#ifdef FORM_CONSOLE_TEST
+			int rc = getLine("Veuillez indiquer votre age:", inputWeight, sizeof(inputWeight));
+			if (rc == NO_INPUT)
+			{
+				// Extra NL since my system doesn't output that on EOF.
+				printf ("\nNo input\n");
+			}
+
+			if (rc == TOO_LONG)
+			{
+				printf ("Input too long [%s]\n", inputWeight);
+			}
+
+			printf ("OK [%s]\n", inputWeight);
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Veuillez indiquer votre poid en entier (lbs):");
+			//inputWeight = 0;//lis_wireless_string();
+		#endif
+		//////////////////////////
+
+		if(strlen(inputWeight) <= 3)
 		{
 			unsigned weight = 0;
-			sscanf(inputArray,"%d", &weight);
+			sscanf(inputWeight,"%d", &weight);
 			q->initiatorPatient->Weight = weight;
 			WeightAcquired = true;
 		}
@@ -274,21 +436,29 @@ void QuestionForm::inquireTemperatureInfo()
 }
 */
 
-void inquireTemperatureInfo(QuestionForm *q)
+void InquireTemperatureInfo(QuestionForm *q)
 {
 	//This function is in charge of acquiring the patient's temperature information to fill the profile.
+
 	bool TemperatureAcquired = false;
 	while(!TemperatureAcquired)
 	{
-		//Ecris_wireless_string("Veuillez mettre votre doigts sur le capteur et appuyez sur Enter");
-		char inputVal =0;// lis_wireless()[1];
-		if(inputVal == 13)
-		{
-			TemperatureAcquired = true;
+		//Acquire the information
+		char inputTemp[3];// = lis_wireless_string();
+		float temperatureVal = 0;
+		///////////////////////////
+		#ifdef FORM_CONSOLE_TEST
+			printf("Veuillez entrer votre temperature en valeur decimale:");
+			sscanf(inputTemp,"%f", &temperatureVal);
+		#endif
+		#ifndef FORM_CONSOLE_TEST
+			//Ecris_wireless_string("Veuillez mettre votre doigts sur le capteur et appuyez sur Enter");
 			
-			float temperatureVal = 0;
 			getTemperatureCelsiusStd(&temperatureVal);
-			NewTemperatureMeasurement(q->initiatorPatient->Temperature,temperatureVal);
-		}
+		#endif
+		//////////////////////////
+		
+		TemperatureAcquired = true;		
+		NewTemperatureMeasurement(q->initiatorPatient->Temperature,temperatureVal);
 	}
 }

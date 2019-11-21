@@ -38,10 +38,10 @@ typedef struct _QuestionForm
 	bool hasTemperatureInfo;
 } QuestionForm;
 
-void initQuestionForm(QuestionForm *q, PatientStruct *p);
+void InitQuestionForm(QuestionForm *q, PatientStruct *p);
 
-void inquirePatientInfo(QuestionForm *q);
-void inquireTemperatureInfo(QuestionForm *q);
+void InquirePatientInfo(QuestionForm *q);
+void InquireTemperatureInfo(QuestionForm *q);
 
 void RunQuestionForm(QuestionForm *q);
 

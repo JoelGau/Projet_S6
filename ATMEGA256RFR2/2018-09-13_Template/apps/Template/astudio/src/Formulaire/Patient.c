@@ -29,7 +29,7 @@ unsigned NewTemperatureMeasurement(MeasurementStruct *input, float inputVal)//, 
 	}
 	else
 		returnVal = 1;
-	input->isInitialized = true;
+	input->isInitialized = false;
 	
 	return returnVal;
 }

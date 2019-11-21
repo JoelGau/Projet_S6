@@ -50,6 +50,9 @@
 #include "astudio/includes/temperature.h"
 #include "astudio/includes/at30ts.h"
 
+#include "astudio/src/Formulaire/Form.h"
+#include "astudio/src/Formulaire/Patient.h"
+
 #include <stdint-gcc.h>
 #include <delay.h>
 #include <sysclk.h>
@@ -65,6 +68,8 @@
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
+
+
 
 /*- Types ------------------------------------------------------------------*/
 // Put your type definitions here
@@ -89,6 +94,10 @@ uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet 
 // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)					
 char buff_nom[20];
 uint8_t ind_buff = 0;
+
+//Initialize an empty patient object and the question form.
+PatientStruct patientInfo;
+QuestionForm questionForm;
 
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
 
@@ -160,6 +169,14 @@ int main(void)
    
 	while (1)
 	{
+
+
+		//Sync the QuestionForm object with the current state of the patient info
+		InitQuestionForm(&questionForm, &patientInfo);
+		//Run the form, which acquires the informations if necessary.
+		RunQuestionForm(&questionForm);
+
+		
 		//getTemperatureCelsius(temp);
 		//delay_ms(250);
 		PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
