@@ -23,7 +23,7 @@ template.d template.o: ../../template.c ../../../../sys/inc/sys.h \
  ../../../../nwk/inc/nwkGroup.h ../../../../nwk/inc/nwkSecurity.h \
  ../../../../nwk/inc/nwkDataReq.h ../../../../hal/atmega256rfr2/inc/hal.h \
  ../../../../hal/atmega256rfr2/inc/halGpio.h \
- ../../astudio/includes/temperature.h ../../astudio/includes/at30ts.h \
+ ../src/../includes/temperature.h ../src/../includes/at30ts.h \
  ../src/ASF/mega/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  ../src/ASF/common/utils/parts.h ../src/ASF/common/utils/interrupt.h \
@@ -43,7 +43,7 @@ template.d template.o: ../../template.c ../../../../sys/inc/sys.h \
  ../src/ASF/common/services/gpio/mega_gpio/mega_gpio.h \
  ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/mega/ioport.h \
- ../../astudio/includes/conf_at30ts.h \
+ ../src/../includes/conf_at30ts.h ../src/../includes/CUMmunication.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  ../src/ASF/common/services/delay/delay.h \
  ../src/ASF/common/services/delay/mega/cycle_counter.h \
@@ -113,9 +113,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../../../../hal/atmega256rfr2/inc/halGpio.h:
 
-../../astudio/includes/temperature.h:
+../src/../includes/temperature.h:
 
-../../astudio/includes/at30ts.h:
+../src/../includes/at30ts.h:
 
 ../src/ASF/mega/utils/compiler.h:
 
@@ -161,7 +161,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../src/ASF/common/services/ioport/mega/ioport.h:
 
-../../astudio/includes/conf_at30ts.h:
+../src/../includes/conf_at30ts.h:
+
+../src/../includes/CUMmunication.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 

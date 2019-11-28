@@ -321,7 +321,13 @@
       <SubType>compile</SubType>
       <Link>template.c</Link>
     </Compile>
+    <Compile Include="includes\CUMmunication.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\at30ts.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\CUMmunication.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Formulaire\Form.c">
