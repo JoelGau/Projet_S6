@@ -125,7 +125,7 @@ static void APP_TaskHandler(void)
 	// reception d'une chaine de caractere
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
-	uint8_t received_data[20] = {0};
+	uint8_t received_data[20] = {};
 	int i = 0;
 
 	// remplir l'array avec les valeurs recues

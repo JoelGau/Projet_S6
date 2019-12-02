@@ -1648,11 +1648,11 @@ END GROUP
  .debug_str     0x00000000      0x7f7 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_str     0x000007f7     0xf939 stack/phy/atmegarfr2/src/phy.o
                                0xfa9c (size before relaxing)
- .debug_str     0x00010130     0xa256 template.o
-                              0x18a4a (size before relaxing)
- .debug_str     0x0001a386      0x693 src/at30ts.o
+ .debug_str     0x00010130     0xa1f1 template.o
+                              0x18a4f (size before relaxing)
+ .debug_str     0x0001a321      0x693 src/at30ts.o
                               0x17921 (size before relaxing)
- .debug_str     0x0001aa19       0x76 src/CUMmunication.o
+ .debug_str     0x0001a9b4       0xdb src/CUMmunication.o
                               0x17a81 (size before relaxing)
  .debug_str     0x0001aa8f      0x647 src/temperature.o
                               0x189b8 (size before relaxing)
