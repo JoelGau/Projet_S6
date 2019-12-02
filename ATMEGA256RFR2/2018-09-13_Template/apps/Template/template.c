@@ -79,6 +79,8 @@ void SYS_Init(void);
 // Put your variables here
 uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet aura été recu via wireless (et copié dans "PHY_DataInd_t ind"
 							//il faut la mettre a 0 apres avoir géré le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jeté
+char buff_nom[100] = {0};
+uint8_t ind2 = 0;
 							
 // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)					
 
@@ -104,23 +106,20 @@ static void APP_TaskHandler(void)
 	//initQuestionForm(formulaire_patient, patient);
 	
 	//RunQuestionForm(formulaire_patient);
-		
-	char buff_nom[100] = {0};
-	uint8_t ind2 = 0;
 	
-	init_buff(buff_nom);
+	//init_buff(buff_nom);
 	
-	ind2 = Lis_UART_string(buff_nom); // lis les informations du clavier, et les met dans la variable global "buff_nom" et incrémente la variable globale "ind_buff"
-	ind2 = ind2-1;
+	ind2 = Lis_UART_string(buff_nom, ind2); // lis les informations du clavier, et les met dans la variable global "buff_nom" et incrémente la variable globale "ind_buff"
 	
 	// envoi la variable gloable "buff_nom" et la variable globale "ind_buff"
-	if ((buff_nom[ind2] == 13))
+	if ((buff_nom[ind2-1] == 13))
 	{
 		Ecris_UART_string("\n\r");
 		Ecris_UART_string(buff_nom);
 		Ecris_UART_string("\n\r");
-		Ecris_Wireless(buff_nom, ind2+1);
+		Ecris_Wireless(buff_nom, ind2);
 		init_buff(buff_nom);
+		ind2 = 0;
 	}
 
 	// reception d'une chaine de caractere

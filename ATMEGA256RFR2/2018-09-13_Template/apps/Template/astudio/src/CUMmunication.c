@@ -19,6 +19,10 @@
  // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)
 // extern char buff_nom[];
 // extern uint8_t ind_buff;
+
+extern char buff_nom[100];
+extern uint8_t ind2;
+
  
  
  //FONCTIONS POUR L'UART
@@ -35,11 +39,11 @@
  }
  
 
- uint8_t Lis_UART_string(char *buff)
+ uint8_t Lis_UART_string(char *buff, uint8_t ind)
  {
 	char receivedUart;
 	receivedUart = '0';
-	uint8_t ind_buff = 0;
+	uint8_t ind_buff = ind;
 
 	while (receivedUart != 13)
 	{
