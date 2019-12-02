@@ -20,7 +20,7 @@
 // extern char buff_nom[];
 // extern uint8_t ind_buff;
 
-extern char buff_nom[100];
+extern char buff_nom[20];
 extern uint8_t ind2;
 
  
@@ -98,7 +98,7 @@ extern uint8_t ind2;
  // Fonctions Wireless
  void init_buff(char* buff)
  {
-	 for (int i = 0; i < 100; i++) {
+	 for (int i = 0; i < 20; i++) {
 		 buff[i] = '\0';
 	 }
  }

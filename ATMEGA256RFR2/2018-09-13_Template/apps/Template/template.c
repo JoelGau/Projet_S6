@@ -79,7 +79,7 @@ void SYS_Init(void);
 // Put your variables here
 uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet aura été recu via wireless (et copié dans "PHY_DataInd_t ind"
 							//il faut la mettre a 0 apres avoir géré le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jeté
-char buff_nom[100] = {0};
+char buff_nom[20] = {};
 uint8_t ind2 = 0;
 							
 // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)					
@@ -125,7 +125,7 @@ static void APP_TaskHandler(void)
 	// reception d'une chaine de caractere
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
-	uint8_t received_data[100] = {0};
+	uint8_t received_data[20] = {0};
 	int i = 0;
 
 	// remplir l'array avec les valeurs recues
