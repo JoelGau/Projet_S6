@@ -34,7 +34,16 @@ src/CUMmunication.d src/CUMmunication.o: ../src/CUMmunication.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  ../src/ASF/mega/boards/atmega256rfr2_xplained_pro/led.h \
- ../src/../includes/CUMmunication.h
+ ../src/../includes/CUMmunication.h ../../../../sys/inc/sys.h \
+ ../../../../sys/inc/sysConfig.h ../../config.h \
+ ../../../../phy/atmegarfr2/inc/phy.h ../../../../sys/inc/sysConfig.h \
+ ../../../../nwk/inc/nwk.h ../../../../nwk/inc/nwkRoute.h \
+ ../../../../sys/inc/sysTypes.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h \
+ ../../../../nwk/inc/nwkRx.h ../../../../nwk/inc/nwkFrame.h \
+ ../../../../nwk/inc/nwkGroup.h ../../../../nwk/inc/nwkSecurity.h \
+ ../../../../nwk/inc/nwkDataReq.h ../../../../hal/atmega256rfr2/inc/hal.h \
+ ../../../../hal/atmega256rfr2/inc/halGpio.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
@@ -111,3 +120,35 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../src/ASF/mega/boards/atmega256rfr2_xplained_pro/led.h:
 
 ../src/../includes/CUMmunication.h:
+
+../../../../sys/inc/sys.h:
+
+../../../../sys/inc/sysConfig.h:
+
+../../config.h:
+
+../../../../phy/atmegarfr2/inc/phy.h:
+
+../../../../sys/inc/sysConfig.h:
+
+../../../../nwk/inc/nwk.h:
+
+../../../../nwk/inc/nwkRoute.h:
+
+../../../../sys/inc/sysTypes.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h:
+
+../../../../nwk/inc/nwkRx.h:
+
+../../../../nwk/inc/nwkFrame.h:
+
+../../../../nwk/inc/nwkGroup.h:
+
+../../../../nwk/inc/nwkSecurity.h:
+
+../../../../nwk/inc/nwkDataReq.h:
+
+../../../../hal/atmega256rfr2/inc/hal.h:
+
+../../../../hal/atmega256rfr2/inc/halGpio.h:

@@ -107,42 +107,6 @@ static void APP_TaskHandler(void)
 	
 	//RunQuestionForm(formulaire_patient);
 	
-	//init_buff(buff_nom);
-	
-	ind2 = Lis_UART_string(buff_nom, ind2); // lis les informations du clavier, et les met dans la variable global "buff_nom" et incrémente la variable globale "ind_buff"
-	
-	// envoi la variable gloable "buff_nom" et la variable globale "ind_buff"
-	if ((buff_nom[ind2-1] == 13))
-	{
-		Ecris_UART_string("\n\r");
-		Ecris_UART_string(buff_nom);
-		Ecris_UART_string("\n\r");
-		Ecris_Wireless(buff_nom, ind2);
-		init_buff(buff_nom);
-		ind2 = 0;
-	}
-
-	// reception d'une chaine de caractere
-  if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
-  {
-	uint8_t received_data[20] = {};
-	int i = 0;
-
-	// remplir l'array avec les valeurs recues
-	while (i < ind.size)
-	{
-		received_data[i] = ind.data[i];
-		i++;
-	}
-	
-	// affiche le message recu
-	Ecris_UART_string("\n\r");
-	Ecris_UART_string(received_data);
-	Ecris_UART_string( "\n\rnew trame! size: %d, RSSI: %ddBm\n\r", ind.size, ind.rssi );
-	Ecris_UART_string("\n\r");
-	receivedWireless = 0; 
-
-  }
 }
 
 
@@ -157,14 +121,34 @@ int main(void)
 	sei(); // Enable global interrupts
 	short temp[3] = {0,0,0};
 	SYS_Init();
-   
-	while (1)
+	char fuckoff[100] = {};
+	uint8_t received_data[100] = {};
+	uint8_t indice = 0;
+	
+
+	
+	while(1)
 	{
-		//getTemperatureCelsius(temp);
-		//delay_ms(250);
-		PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-		APP_TaskHandler(); //l'application principale roule ici
+		getTemperatureCelsius(temp);
+		delay_ms(250);
+		fuckoff[0] = temp[1];
+		// permet l'envoi d'un message et la gestion des affichages
+		//indice =  Lis_UART_string(fuckoff, indice);
+		Ecris_Wireless(fuckoff, 1);
+		init_buff(fuckoff);
+		indice = 0;
+		
+		//Permet la reception d'un message via Wireless
+		receivedWirelessBLOQUANT(received_data);
+
+			
+		// affiche le message recu
+		Ecris_UART_string("\n\r");
+		Ecris_UART_string("température recue: %d" , (uint8_t) received_data[0]);
+		Ecris_UART_string( "\n\rnew trame! size: %d, RSSI: %ddBm\n\r", ind.size, ind.rssi );
+		Ecris_UART_string("\n\r");		
 	}
+	
 }
 
 

@@ -17,5 +17,6 @@ void Ecris_UART_string(char const * data, ...);
 void init_UART(void);
 uint8_t Lis_UART_string(char* buff, uint8_t ind);
 void init_buff(char* buff);
+void receivedWirelessBLOQUANT(uint8_t * received_data);
 
 #endif /* CUMMUNICATION_H_ */

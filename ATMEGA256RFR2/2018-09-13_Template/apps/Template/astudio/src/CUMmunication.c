@@ -5,6 +5,7 @@
  *  Author: Berthie
  */ 
 
+
 #include <stdint-gcc.h>
 #include <delay.h>
 #include <sysclk.h>
@@ -15,13 +16,13 @@
 #include <stdarg.h>
 
 #include "../includes/CUMmunication.h"
- 
- // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)
-// extern char buff_nom[];
-// extern uint8_t ind_buff;
+#include "sys.h"
+#include "phy.h"
 
-extern char buff_nom[20];
+ // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)
+extern char buff_nom[100];
 extern uint8_t ind2;
+extern PHY_DataInd_t ind;
 
  
  
@@ -55,6 +56,10 @@ extern uint8_t ind2;
 			Ecris_UART(receivedUart); // echo vers le terminal	
 		}
 	}
+	
+	Ecris_UART_string("\n\r");
+	Ecris_UART_string(buff);
+	Ecris_UART_string("\n\r");
 	return ind_buff;
  }
 
@@ -98,7 +103,26 @@ extern uint8_t ind2;
  // Fonctions Wireless
  void init_buff(char* buff)
  {
-	 for (int i = 0; i < 20; i++) {
+	 for (int i = 0; i < 100; i++) {
 		 buff[i] = '\0';
 	 }
+ }
+ 
+ 
+ void receivedWirelessBLOQUANT(uint8_t * received_data)
+ {
+ 	while (receivedWireless != 1)
+ 	{
+	 	PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+ 	}
+ 		
+ 	int i = 0;
+
+ 	// remplir l'array avec les valeurs recues
+ 	while (i < ind.size)
+ 	{
+	 	received_data[i] = ind.data[i];
+	 	i++;
+ 	}
+	receivedWireless = 0;	
  }
