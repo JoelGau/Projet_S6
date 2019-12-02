@@ -8,13 +8,14 @@
 
 #ifndef CUMMUNICATION_H_
 #define CUMMUNICATION_H_
+#include <stdint-gcc.h>
 
 /*- Prototypes -------------------------------------------------------------*/
 char Lis_UART();
 void Ecris_UART(char data);
 void Ecris_UART_string(char const * data, ...);
 void init_UART(void);
-void Lis_UART_string(void);
-void init_buff_nom(void);
+uint8_t Lis_UART_string(char* buff);
+void init_buff(char* buff);
 
 #endif /* CUMMUNICATION_H_ */

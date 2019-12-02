@@ -8,6 +8,7 @@
 #include "Form.h"
 #include "Patient.h"
 #include "astudio/includes/temperature.h"
+#include "../../includes/CUMmunication.h"
 
 #include <stdbool.h>
 #include <string.h>
@@ -188,9 +189,12 @@ void inquirePatientInfo(QuestionForm* q)
 	unsigned a,b,c,d;
 	while(!NAMacquired)
 	{
-		//Ecris_wireless_string("Veuillez indiquer votre numero d''assurance maladie:");
+		Ecris_UART_string("*************************************************");
+		Ecris_UART_string("\n\r Veuillez indiquer votre numero d''assurance maladie: ");
 		//Acquire the information
-		char* inputArray = 0;//lis_wireless_string();
+		char* inputArray[100] = {0};
+		uint8_t* ind_Array = 0;
+		//Lis_UART_string(inputArray, ind_Array);
 		if(strlen(inputArray) == 12)
 		{
 			strcpy(inputArray,q->initiatorPatient->ID);

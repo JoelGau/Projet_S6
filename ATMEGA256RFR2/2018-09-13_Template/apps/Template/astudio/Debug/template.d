@@ -45,6 +45,7 @@ template.d template.o: ../../template.c ../../../../sys/inc/sys.h \
  ../src/ASF/common/services/ioport/mega/ioport.h \
  ../src/../includes/conf_at30ts.h ../src/../includes/CUMmunication.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
+ ../src/../src/Formulaire/Form.h ../src/../src/Formulaire/Patient.h \
  ../src/ASF/common/services/delay/delay.h \
  ../src/ASF/common/services/delay/mega/cycle_counter.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
@@ -166,6 +167,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/../includes/CUMmunication.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
+
+../src/../src/Formulaire/Form.h:
+
+../src/../src/Formulaire/Patient.h:
 
 ../src/ASF/common/services/delay/delay.h:
 

@@ -17,9 +17,8 @@
 #include "../includes/CUMmunication.h"
  
  // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)
- extern char buff_nom[];
- extern uint8_t ind_buff;
- 
+// extern char buff_nom[];
+// extern uint8_t ind_buff;
  
  
  //FONCTIONS POUR L'UART
@@ -34,21 +33,25 @@
 	 }
 	 return data;
  }
+ 
 
- void Lis_UART_string()
+ uint8_t Lis_UART_string(char *buff)
  {
-	 char receivedUart = 0;
+	char receivedUart;
+	receivedUart = '0';
+	uint8_t ind_buff = 0;
 
-	 receivedUart = Lis_UART();
-	 if (receivedUart)	{
-		 Ecris_UART(receivedUart); // echo vers le terminal
-		 buff_nom[ind_buff] = receivedUart;
-		 if (receivedUart != 13)
-		 {
-			 ind_buff++;
-		 }
-		 receivedUart = 0;
-	 }
+	while (receivedUart != 13)
+	{
+		if(UCSR1A & (0x01 << RXC1))
+		{
+			receivedUart = UDR1;
+			buff[ind_buff] = receivedUart;
+			ind_buff++;
+			Ecris_UART(receivedUart); // echo vers le terminal	
+		}
+	}
+	return ind_buff;
  }
 
 
@@ -89,10 +92,9 @@
  }
 
  // Fonctions Wireless
- void init_buff_nom(void)
+ void init_buff(char* buff)
  {
-	 for (int i = 0; i < 20; i++) {
-		 buff_nom[i] = 0;
+	 for (int i = 0; i < 100; i++) {
+		 buff[i] = '\0';
 	 }
-	 ind_buff = 0;
  }

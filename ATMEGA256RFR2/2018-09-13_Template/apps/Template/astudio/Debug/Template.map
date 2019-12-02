@@ -88,7 +88,6 @@ errno               0x2               c:/program files (x86)/atmel/studio/7.0/to
 ind                 0x5               template.o
 opt                 0x6               src/temperature.o
 receivedWireless    0x1               template.o
-buff_nom            0x1               template.o
 package             0xa               src/temperature.o
 
 Discarded input sections
@@ -179,6 +178,7 @@ Discarded input sections
  .text          0x00000000        0x0 template.o
  .data          0x00000000        0x0 template.o
  .bss           0x00000000        0x0 template.o
+ .data.debug    0x00000000        0x2 template.o
  .debug_macro   0x00000000      0xa8a template.o
  .debug_macro   0x00000000       0x40 template.o
  .debug_macro   0x00000000      0x1c9 template.o
@@ -364,6 +364,8 @@ Discarded input sections
  .text          0x00000000        0x0 src/CUMmunication.o
  .data          0x00000000        0x0 src/CUMmunication.o
  .bss           0x00000000        0x0 src/CUMmunication.o
+ .text.Lis_UART
+                0x00000000       0x12 src/CUMmunication.o
  .debug_macro   0x00000000      0xa8a src/CUMmunication.o
  .debug_macro   0x00000000      0x34e src/CUMmunication.o
  .debug_macro   0x00000000      0x6c2 src/CUMmunication.o
@@ -410,41 +412,43 @@ Discarded input sections
  .group         0x00000000        0x8 src/Formulaire/Form.o
  .group         0x00000000        0x8 src/Formulaire/Form.o
  .group         0x00000000        0x8 src/Formulaire/Form.o
+ .group         0x00000000        0x8 src/Formulaire/Form.o
  .text          0x00000000        0x0 src/Formulaire/Form.o
  .data          0x00000000        0x0 src/Formulaire/Form.o
  .bss           0x00000000        0x0 src/Formulaire/Form.o
  .text.initQuestionForm
                 0x00000000       0x34 src/Formulaire/Form.o
  .rodata.str1.1
-                0x00000000        0x3 src/Formulaire/Form.o
+                0x00000000       0x6e src/Formulaire/Form.o
  .text.inquirePatientInfo
-                0x00000000       0xf6 src/Formulaire/Form.o
+                0x00000000      0x16e src/Formulaire/Form.o
  .text.RunQuestionForm
                 0x00000000       0x20 src/Formulaire/Form.o
  .text.inquireTemperatureInfo
                 0x00000000        0x2 src/Formulaire/Form.o
- .debug_info    0x00000000      0x3f2 src/Formulaire/Form.o
- .debug_abbrev  0x00000000      0x1a1 src/Formulaire/Form.o
- .debug_loc     0x00000000      0x1d6 src/Formulaire/Form.o
+ .debug_info    0x00000000      0x458 src/Formulaire/Form.o
+ .debug_abbrev  0x00000000      0x1b3 src/Formulaire/Form.o
+ .debug_loc     0x00000000      0x231 src/Formulaire/Form.o
  .debug_aranges
                 0x00000000       0x38 src/Formulaire/Form.o
  .debug_ranges  0x00000000       0x28 src/Formulaire/Form.o
- .debug_macro   0x00000000       0x97 src/Formulaire/Form.o
+ .debug_macro   0x00000000       0xaa src/Formulaire/Form.o
  .debug_macro   0x00000000      0xa8a src/Formulaire/Form.o
  .debug_macro   0x00000000       0x22 src/Formulaire/Form.o
+ .debug_macro   0x00000000      0x34e src/Formulaire/Form.o
  .debug_macro   0x00000000       0x16 src/Formulaire/Form.o
  .debug_macro   0x00000000       0x97 src/Formulaire/Form.o
  .debug_macro   0x00000000       0x16 src/Formulaire/Form.o
- .debug_macro   0x00000000      0x1c9 src/Formulaire/Form.o
+ .debug_macro   0x00000000      0x1ad src/Formulaire/Form.o
  .debug_macro   0x00000000      0x2fc src/Formulaire/Form.o
  .debug_macro   0x00000000       0x58 src/Formulaire/Form.o
  .debug_macro   0x00000000       0x10 src/Formulaire/Form.o
  .debug_macro   0x00000000       0x20 src/Formulaire/Form.o
  .debug_macro   0x00000000       0xf2 src/Formulaire/Form.o
- .debug_line    0x00000000      0x26a src/Formulaire/Form.o
- .debug_str     0x00000000     0x4359 src/Formulaire/Form.o
+ .debug_line    0x00000000      0x2d2 src/Formulaire/Form.o
+ .debug_str     0x00000000     0x4c17 src/Formulaire/Form.o
  .comment       0x00000000       0x31 src/Formulaire/Form.o
- .debug_frame   0x00000000       0x88 src/Formulaire/Form.o
+ .debug_frame   0x00000000       0xac src/Formulaire/Form.o
  .group         0x00000000        0x8 src/Formulaire/Patient.o
  .group         0x00000000        0x8 src/Formulaire/Patient.o
  .group         0x00000000        0x8 src/Formulaire/Patient.o
@@ -1197,7 +1201,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1198
+.text           0x00000000     0x11c6
  *(.vectors)
  .vectors       0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
                 0x00000000                __vector_default
@@ -1353,75 +1357,72 @@ END GROUP
                 0x00000424       0xa8 stack/phy/atmegarfr2/src/phy.o
                 0x00000424                PHY_TaskHandler
  .text.SYS_Init
-                0x000004cc       0x26 template.o
+                0x000004cc       0x24 template.o
                 0x000004cc                SYS_Init
- .text.main     0x000004f2      0x10a template.o
-                0x000004f2                main
+ .text.main     0x000004f0      0x11e template.o
+                0x000004f0                main
  .text.attach_device
-                0x000005fc       0x5c src/at30ts.o
-                0x000005fc                attach_device
- .text.Lis_UART
-                0x00000658       0x12 src/CUMmunication.o
-                0x00000658                Lis_UART
+                0x0000060e       0x5c src/at30ts.o
+                0x0000060e                attach_device
  .text.Ecris_UART
                 0x0000066a       0x10 src/CUMmunication.o
                 0x0000066a                Ecris_UART
  .text.Lis_UART_string
-                0x0000067a       0x28 src/CUMmunication.o
+                0x0000067a       0x5c src/CUMmunication.o
                 0x0000067a                Lis_UART_string
  .text.Ecris_UART_string
-                0x000006a2       0x70 src/CUMmunication.o
-                0x000006a2                Ecris_UART_string
+                0x000006d6       0x70 src/CUMmunication.o
+                0x000006d6                Ecris_UART_string
  .text.init_UART
-                0x00000712       0x1c src/CUMmunication.o
-                0x00000712                init_UART
- .text.init_buff_nom
-                0x0000072e       0x16 src/CUMmunication.o
-                0x0000072e                init_buff_nom
+                0x00000746       0x1c src/CUMmunication.o
+                0x00000746                init_UART
+ .text.init_buff
+                0x00000762       0x10 src/CUMmunication.o
+                0x00000762                init_buff
  .text.__portable_avr_delay_cycles
-                0x00000744       0x16 src/temperature.o
+                0x00000772       0x16 src/temperature.o
  .text.TWI_init
-                0x0000075a       0x6c src/temperature.o
-                0x0000075a                TWI_init
+                0x00000788       0x6c src/temperature.o
+                0x00000788                TWI_init
  .text.sysclk_enable_module
-                0x000007c6       0x30 src/ASF/common/services/clock/mega/sysclk.o
-                0x000007c6                sysclk_enable_module
+                0x000007f4       0x30 src/ASF/common/services/clock/mega/sysclk.o
+                0x000007f4                sysclk_enable_module
  .text.board_init
-                0x000007f6        0xa src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
-                0x000007f6                board_init
+                0x00000824        0xa src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+                0x00000824                board_init
  .text.twi_master_bus_reset
-                0x00000800       0x12 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x0000082e       0x12 src/ASF/mega/drivers/twi/twi_megarf.o
  .text.twi_master_init
-                0x00000812       0x26 src/ASF/mega/drivers/twi/twi_megarf.o
-                0x00000812                twi_master_init
+                0x00000840       0x26 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x00000840                twi_master_init
  .text.__vector_39
-                0x00000838      0x3a2 src/ASF/mega/drivers/twi/twi_megarf.o
-                0x00000838                __vector_39
- .text.libgcc   0x00000bda       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_tablejump2.o)
-                0x00000bda                __tablejump2__
+                0x00000866      0x3a2 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x00000866                __vector_39
+ .text.libgcc   0x00000c08       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_tablejump2.o)
+                0x00000c08                __tablejump2__
  .text.avr-libc
-                0x00000bea       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(vsprintf.o)
-                0x00000bea                vsprintf
+                0x00000c18       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(vsprintf.o)
+                0x00000c18                vsprintf
  .text.avr-libc
-                0x00000c3a      0x3fa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(vfprintf_std.o)
-                0x00000c3a                vfprintf
+                0x00000c68      0x3fa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(vfprintf_std.o)
+                0x00000c68                vfprintf
  .text.avr-libc
-                0x00001034       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(strnlen_P.o)
-                0x00001034                strnlen_P
+                0x00001062       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(strnlen_P.o)
+                0x00001062                strnlen_P
  .text.avr-libc
-                0x0000104a       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(strnlen.o)
-                0x0000104a                strnlen
+                0x00001078       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(strnlen.o)
+                0x00001078                strnlen
  .text.avr-libc
-                0x00001060       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(fputc.o)
-                0x00001060                fputc
+                0x0000108e       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(fputc.o)
+                0x0000108e                fputc
  .text.avr-libc
-                0x000010d8       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(ultoa_invert.o)
-                0x000010d8                __ultoa_invert
-                0x00001194                . = ALIGN (0x2)
+                0x00001106       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(ultoa_invert.o)
+                0x00001106                __ultoa_invert
+                0x000011c2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001194        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
-                0x00001194                _exit
-                0x00001194                exit
+ .fini9         0x000011c2        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
+                0x000011c2                _exit
+                0x000011c2                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1440,65 +1441,60 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001194        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
+ .fini0         0x000011c2        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001198                _etext = .
+                0x000011c6                _etext = .
 
-.data           0x00800200       0x28 load address 0x00001198
+.data           0x00800200       0x26 load address 0x000011c6
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
- .data.debug    0x00800200        0x2 template.o
-                0x00800200                debug
  *(.gnu.linkonce.d*)
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800202       0x25 template.o
+                0x00800200       0x25 template.o
                                  0x28 (size before relaxing)
  *(.gnu.linkonce.r*)
-                0x00800228                . = ALIGN (0x2)
- *fill*         0x00800227        0x1 
-                0x00800228                _edata = .
-                0x00800228                PROVIDE (__data_end, .)
+                0x00800226                . = ALIGN (0x2)
+ *fill*         0x00800225        0x1 
+                0x00800226                _edata = .
+                0x00800226                PROVIDE (__data_end, .)
 
-.bss            0x00800228       0xa1
-                0x00800228                PROVIDE (__bss_start, .)
+.bss            0x00800226       0x9f
+                0x00800226                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.phyBand   0x00800228        0x1 stack/phy/atmegarfr2/src/phy.o
+ .bss.phyBand   0x00800226        0x1 stack/phy/atmegarfr2/src/phy.o
  .bss.phyChannel
-                0x00800229        0x1 stack/phy/atmegarfr2/src/phy.o
+                0x00800227        0x1 stack/phy/atmegarfr2/src/phy.o
  .bss.phyRxState
-                0x0080022a        0x1 stack/phy/atmegarfr2/src/phy.o
+                0x00800228        0x1 stack/phy/atmegarfr2/src/phy.o
  .bss.phyRxBuffer
-                0x0080022b       0x80 stack/phy/atmegarfr2/src/phy.o
- .bss.phyState  0x008002ab        0x1 stack/phy/atmegarfr2/src/phy.o
- .bss.ind_buff  0x008002ac        0x1 template.o
-                0x008002ac                ind_buff
+                0x00800229       0x80 stack/phy/atmegarfr2/src/phy.o
+ .bss.phyState  0x008002a9        0x1 stack/phy/atmegarfr2/src/phy.o
  .bss.at30ts_attached_device
-                0x008002ad        0x4 src/at30ts.o
- .bss.twi_mode  0x008002b1        0x1 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x008002aa        0x4 src/at30ts.o
+ .bss.twi_mode  0x008002ae        0x1 src/ASF/mega/drivers/twi/twi_megarf.o
  .bss.twi_master_busy
-                0x008002b2        0x1 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x008002af        0x1 src/ASF/mega/drivers/twi/twi_megarf.o
  .bss.slave_transfer
-                0x008002b3        0x7 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x008002b0        0x7 src/ASF/mega/drivers/twi/twi_megarf.o
  .bss.master_transfer
-                0x008002ba        0x8 src/ASF/mega/drivers/twi/twi_megarf.o
+                0x008002b7        0x8 src/ASF/mega/drivers/twi/twi_megarf.o
  *(COMMON)
- COMMON         0x008002c2        0x7 template.o
-                0x008002c2                ind
-                0x008002c7                receivedWireless
-                0x008002c8                buff_nom
-                0x008002c9                PROVIDE (__bss_end, .)
-                0x00001198                __data_load_start = LOADADDR (.data)
-                0x000011c0                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008002bf        0x6 template.o
+                0x008002bf                ind
+                0x008002c4                receivedWireless
+                0x008002c5                PROVIDE (__bss_end, .)
+                0x000011c6                __data_load_start = LOADADDR (.data)
+                0x000011ec                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008002c9        0x0
+.noinit         0x008002c5        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008002c9                _end = .
+                0x008002c5                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -1596,83 +1592,83 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x4af0
+.debug_info     0x00000000     0x4b44
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x13e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_info    0x000013e6      0x6ab stack/phy/atmegarfr2/src/phy.o
- .debug_info    0x00001a91      0x3ab template.o
- .debug_info    0x00001e3c     0x1185 src/at30ts.o
- .debug_info    0x00002fc1      0x25c src/CUMmunication.o
- .debug_info    0x0000321d      0x8f3 src/temperature.o
- .debug_info    0x00003b10      0x2b5 src/ASF/common/services/clock/mega/sysclk.o
- .debug_info    0x00003dc5      0x282 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_info    0x00004047      0xaa9 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_info    0x00001a91      0x3f6 template.o
+ .debug_info    0x00001e87     0x1185 src/at30ts.o
+ .debug_info    0x0000300c      0x265 src/CUMmunication.o
+ .debug_info    0x00003271      0x8f3 src/temperature.o
+ .debug_info    0x00003b64      0x2b5 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_info    0x00003e19      0x282 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_info    0x0000409b      0xaa9 src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_abbrev   0x00000000     0x2496
+.debug_abbrev   0x00000000     0x24b7
  *(.debug_abbrev)
  .debug_abbrev  0x00000000     0x12d6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_abbrev  0x000012d6      0x26c stack/phy/atmegarfr2/src/phy.o
- .debug_abbrev  0x00001542      0x1d1 template.o
- .debug_abbrev  0x00001713      0x344 src/at30ts.o
- .debug_abbrev  0x00001a57      0x17d src/CUMmunication.o
- .debug_abbrev  0x00001bd4      0x306 src/temperature.o
- .debug_abbrev  0x00001eda      0x1a6 src/ASF/common/services/clock/mega/sysclk.o
- .debug_abbrev  0x00002080      0x149 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_abbrev  0x000021c9      0x2cd src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_abbrev  0x00001542      0x1ec template.o
+ .debug_abbrev  0x0000172e      0x344 src/at30ts.o
+ .debug_abbrev  0x00001a72      0x183 src/CUMmunication.o
+ .debug_abbrev  0x00001bf5      0x306 src/temperature.o
+ .debug_abbrev  0x00001efb      0x1a6 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_abbrev  0x000020a1      0x149 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_abbrev  0x000021ea      0x2cd src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_line     0x00000000     0x3ce5
+.debug_line     0x00000000     0x3d34
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x271 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_line    0x00000271      0x512 stack/phy/atmegarfr2/src/phy.o
- .debug_line    0x00000783      0x87c template.o
- .debug_line    0x00000fff      0xc48 src/at30ts.o
- .debug_line    0x00001c47      0x693 src/CUMmunication.o
- .debug_line    0x000022da      0x7c6 src/temperature.o
- .debug_line    0x00002aa0      0x597 src/ASF/common/services/clock/mega/sysclk.o
- .debug_line    0x00003037      0x479 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_line    0x000034b0      0x835 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_line    0x00000783      0x8b2 template.o
+ .debug_line    0x00001035      0xc48 src/at30ts.o
+ .debug_line    0x00001c7d      0x6ac src/CUMmunication.o
+ .debug_line    0x00002329      0x7c6 src/temperature.o
+ .debug_line    0x00002aef      0x597 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_line    0x00003086      0x479 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_line    0x000034ff      0x835 src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_frame    0x00000000      0x718
+.debug_frame    0x00000000      0x738
  *(.debug_frame)
  .debug_frame   0x00000000       0xb4 stack/phy/atmegarfr2/src/phy.o
  .debug_frame   0x000000b4       0x44 template.o
  .debug_frame   0x000000f8      0x310 src/at30ts.o
- .debug_frame   0x00000408       0xa4 src/CUMmunication.o
- .debug_frame   0x000004ac       0xc8 src/temperature.o
- .debug_frame   0x00000574       0x74 src/ASF/common/services/clock/mega/sysclk.o
- .debug_frame   0x000005e8       0x24 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_frame   0x0000060c      0x10c src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_frame   0x00000408       0xc4 src/CUMmunication.o
+ .debug_frame   0x000004cc       0xc8 src/temperature.o
+ .debug_frame   0x00000594       0x74 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_frame   0x00000608       0x24 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_frame   0x0000062c      0x10c src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_str      0x00000000    0x1b83d
+.debug_str      0x00000000    0x1b85c
  *(.debug_str)
  .debug_str     0x00000000      0x7f7 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_str     0x000007f7     0xf939 stack/phy/atmegarfr2/src/phy.o
                                0xfa9c (size before relaxing)
- .debug_str     0x00010130     0xa1d5 template.o
-                              0x18a3c (size before relaxing)
- .debug_str     0x0001a305      0x693 src/at30ts.o
+ .debug_str     0x00010130     0xa1f1 template.o
+                              0x18a4f (size before relaxing)
+ .debug_str     0x0001a321      0x693 src/at30ts.o
                               0x17921 (size before relaxing)
- .debug_str     0x0001a998       0x6d src/CUMmunication.o
-                              0x17a8e (size before relaxing)
- .debug_str     0x0001aa05      0x64d src/temperature.o
+ .debug_str     0x0001a9b4       0x76 src/CUMmunication.o
+                              0x17a86 (size before relaxing)
+ .debug_str     0x0001aa2a      0x647 src/temperature.o
                               0x189b8 (size before relaxing)
- .debug_str     0x0001b052       0xa0 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_str     0x0001b071       0xa0 src/ASF/common/services/clock/mega/sysclk.o
                               0x16ad3 (size before relaxing)
- .debug_str     0x0001b0f2      0x165 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_str     0x0001b111      0x165 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
                               0x167f9 (size before relaxing)
- .debug_str     0x0001b257      0x5e6 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_str     0x0001b276      0x5e6 src/ASF/mega/drivers/twi/twi_megarf.o
                               0x16252 (size before relaxing)
 
-.debug_loc      0x00000000     0x1b67
+.debug_loc      0x00000000     0x1c88
  *(.debug_loc)
  .debug_loc     0x00000000      0x1a2 stack/phy/atmegarfr2/src/phy.o
- .debug_loc     0x000001a2       0x9b template.o
- .debug_loc     0x0000023d      0xf85 src/at30ts.o
- .debug_loc     0x000011c2      0x1ae src/CUMmunication.o
- .debug_loc     0x00001370      0x22e src/temperature.o
- .debug_loc     0x0000159e      0x1f2 src/ASF/common/services/clock/mega/sysclk.o
- .debug_loc     0x00001790       0x51 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_loc     0x000017e1      0x386 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_loc     0x000001a2       0xbb template.o
+ .debug_loc     0x0000025d      0xf85 src/at30ts.o
+ .debug_loc     0x000011e2      0x2af src/CUMmunication.o
+ .debug_loc     0x00001491      0x22e src/temperature.o
+ .debug_loc     0x000016bf      0x1f2 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_loc     0x000018b1       0x51 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_loc     0x00001902      0x386 src/ASF/mega/drivers/twi/twi_megarf.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1703,7 +1699,7 @@ END GROUP
  .debug_ranges  0x000001e8       0x10 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
  .debug_ranges  0x000001f8       0x60 src/ASF/mega/drivers/twi/twi_megarf.o
 
-.debug_macro    0x00000000     0x8303
+.debug_macro    0x00000000     0x8317
  *(.debug_macro)
  .debug_macro   0x00000000      0x106 stack/phy/atmegarfr2/src/phy.o
  .debug_macro   0x00000106      0xa8a stack/phy/atmegarfr2/src/phy.o
@@ -1726,54 +1722,54 @@ END GROUP
  .debug_macro   0x00004fa3       0x22 stack/phy/atmegarfr2/src/phy.o
  .debug_macro   0x00004fc5       0x40 stack/phy/atmegarfr2/src/phy.o
  .debug_macro   0x00005005      0x27e stack/phy/atmegarfr2/src/phy.o
- .debug_macro   0x00005283      0x304 template.o
- .debug_macro   0x00005587       0x10 template.o
- .debug_macro   0x00005597       0x10 template.o
- .debug_macro   0x000055a7       0x10 template.o
- .debug_macro   0x000055b7       0x1c template.o
- .debug_macro   0x000055d3       0x1c template.o
- .debug_macro   0x000055ef       0x10 template.o
- .debug_macro   0x000055ff       0xf6 template.o
- .debug_macro   0x000056f5       0x1c template.o
- .debug_macro   0x00005711       0x35 template.o
- .debug_macro   0x00005746       0x5a template.o
- .debug_macro   0x000057a0      0x6c2 template.o
- .debug_macro   0x00005e62       0x44 template.o
- .debug_macro   0x00005ea6       0x32 template.o
- .debug_macro   0x00005ed8       0x46 template.o
- .debug_macro   0x00005f1e      0x100 template.o
- .debug_macro   0x0000601e       0x16 template.o
- .debug_macro   0x00006034       0x16 template.o
- .debug_macro   0x0000604a       0xac template.o
- .debug_macro   0x000060f6       0x3a template.o
- .debug_macro   0x00006130      0x2c6 template.o
- .debug_macro   0x000063f6       0x6e template.o
- .debug_macro   0x00006464       0x40 template.o
- .debug_macro   0x000064a4       0x16 template.o
- .debug_macro   0x000064ba       0x34 template.o
- .debug_macro   0x000064ee       0xce template.o
- .debug_macro   0x000065bc       0x1c template.o
- .debug_macro   0x000065d8       0xf0 template.o
- .debug_macro   0x000066c8      0x34e template.o
- .debug_macro   0x00006a16       0x28 template.o
- .debug_macro   0x00006a3e       0x1d template.o
- .debug_macro   0x00006a5b       0x58 template.o
- .debug_macro   0x00006ab3       0x10 template.o
- .debug_macro   0x00006ac3       0xf2 template.o
- .debug_macro   0x00006bb5      0x20e src/at30ts.o
- .debug_macro   0x00006dc3      0x2fc src/at30ts.o
- .debug_macro   0x000070bf      0x16d src/at30ts.o
- .debug_macro   0x0000722c       0x66 src/at30ts.o
- .debug_macro   0x00007292      0x175 src/at30ts.o
- .debug_macro   0x00007407       0x40 src/at30ts.o
- .debug_macro   0x00007447      0x1ed src/CUMmunication.o
- .debug_macro   0x00007634      0x1ad src/CUMmunication.o
- .debug_macro   0x000077e1      0x2c0 src/CUMmunication.o
- .debug_macro   0x00007aa1      0x28d src/temperature.o
- .debug_macro   0x00007d2e       0x10 src/temperature.o
- .debug_macro   0x00007d3e      0x160 src/temperature.o
- .debug_macro   0x00007e9e      0x192 src/ASF/common/services/clock/mega/sysclk.o
- .debug_macro   0x00008030      0x180 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_macro   0x000081b0      0x153 src/ASF/mega/drivers/twi/twi_megarf.o
+ .debug_macro   0x00005283      0x318 template.o
+ .debug_macro   0x0000559b       0x10 template.o
+ .debug_macro   0x000055ab       0x10 template.o
+ .debug_macro   0x000055bb       0x10 template.o
+ .debug_macro   0x000055cb       0x1c template.o
+ .debug_macro   0x000055e7       0x1c template.o
+ .debug_macro   0x00005603       0x10 template.o
+ .debug_macro   0x00005613       0xf6 template.o
+ .debug_macro   0x00005709       0x1c template.o
+ .debug_macro   0x00005725       0x35 template.o
+ .debug_macro   0x0000575a       0x5a template.o
+ .debug_macro   0x000057b4      0x6c2 template.o
+ .debug_macro   0x00005e76       0x44 template.o
+ .debug_macro   0x00005eba       0x32 template.o
+ .debug_macro   0x00005eec       0x46 template.o
+ .debug_macro   0x00005f32      0x100 template.o
+ .debug_macro   0x00006032       0x16 template.o
+ .debug_macro   0x00006048       0x16 template.o
+ .debug_macro   0x0000605e       0xac template.o
+ .debug_macro   0x0000610a       0x3a template.o
+ .debug_macro   0x00006144      0x2c6 template.o
+ .debug_macro   0x0000640a       0x6e template.o
+ .debug_macro   0x00006478       0x40 template.o
+ .debug_macro   0x000064b8       0x16 template.o
+ .debug_macro   0x000064ce       0x34 template.o
+ .debug_macro   0x00006502       0xce template.o
+ .debug_macro   0x000065d0       0x1c template.o
+ .debug_macro   0x000065ec       0xf0 template.o
+ .debug_macro   0x000066dc      0x34e template.o
+ .debug_macro   0x00006a2a       0x28 template.o
+ .debug_macro   0x00006a52       0x1d template.o
+ .debug_macro   0x00006a6f       0x58 template.o
+ .debug_macro   0x00006ac7       0x10 template.o
+ .debug_macro   0x00006ad7       0xf2 template.o
+ .debug_macro   0x00006bc9      0x20e src/at30ts.o
+ .debug_macro   0x00006dd7      0x2fc src/at30ts.o
+ .debug_macro   0x000070d3      0x16d src/at30ts.o
+ .debug_macro   0x00007240       0x66 src/at30ts.o
+ .debug_macro   0x000072a6      0x175 src/at30ts.o
+ .debug_macro   0x0000741b       0x40 src/at30ts.o
+ .debug_macro   0x0000745b      0x1ed src/CUMmunication.o
+ .debug_macro   0x00007648      0x1ad src/CUMmunication.o
+ .debug_macro   0x000077f5      0x2c0 src/CUMmunication.o
+ .debug_macro   0x00007ab5      0x28d src/temperature.o
+ .debug_macro   0x00007d42       0x10 src/temperature.o
+ .debug_macro   0x00007d52      0x160 src/temperature.o
+ .debug_macro   0x00007eb2      0x192 src/ASF/common/services/clock/mega/sysclk.o
+ .debug_macro   0x00008044      0x180 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_macro   0x000081c4      0x153 src/ASF/mega/drivers/twi/twi_megarf.o
 OUTPUT(Template.elf elf32-avr)
 LOAD linker stubs

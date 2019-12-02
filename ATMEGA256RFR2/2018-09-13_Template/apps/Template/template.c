@@ -49,7 +49,8 @@
 #include "phy.h"
 #include "../includes/temperature.h"
 #include "../includes/at30ts.h"
- #include "../includes/CUMmunication.h"
+#include "../includes/CUMmunication.h"
+#include "../src/Formulaire/Form.h"
 
 #include <stdint-gcc.h>
 #include <delay.h>
@@ -80,8 +81,7 @@ uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet 
 							//il faut la mettre a 0 apres avoir géré le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jeté
 							
 // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)					
-char buff_nom[];
-uint8_t ind_buff = 0;
+
 
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
 
@@ -98,27 +98,35 @@ int debug = 1;
 *****************************************************************************/
 static void APP_TaskHandler(void)
 {
-	Lis_UART_string(); // lis les informations du clavier, et les met dans la variable global "buff_nom" et incrémente la variable globale "ind_buff"
+	//QuestionForm formulaire_patient;
+	//PatientStruct patient;
+	
+	//initQuestionForm(formulaire_patient, patient);
+	
+	//RunQuestionForm(formulaire_patient);
+		
+	char buff_nom[100] = {0};
+	uint8_t ind2 = 0;
+	
+	init_buff(buff_nom);
+	
+	ind2 = Lis_UART_string(buff_nom); // lis les informations du clavier, et les met dans la variable global "buff_nom" et incrémente la variable globale "ind_buff"
+	ind2 = ind2-1;
 	
 	// envoi la variable gloable "buff_nom" et la variable globale "ind_buff"
-	if (buff_nom[ind_buff] == 13 && ind_buff > 0)
+	if ((buff_nom[ind2] == 13))
 	{
-		if (debug)
-		{
-			Ecris_UART_string("\n\r");
-			Ecris_UART_string(buff_nom);
-			Ecris_UART_string("\n\r");
-		}
-		
-		Ecris_Wireless(buff_nom, ind_buff);
-		init_buff_nom();
+		Ecris_UART_string("\n\r");
+		Ecris_UART_string(buff_nom);
+		Ecris_UART_string("\n\r");
+		Ecris_Wireless(buff_nom, ind2+1);
+		init_buff(buff_nom);
 	}
-
 
 	// reception d'une chaine de caractere
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
-	uint8_t received_data[20] = {};
+	uint8_t received_data[100] = {0};
 	int i = 0;
 
 	// remplir l'array avec les valeurs recues
@@ -172,7 +180,6 @@ void SYS_Init(void)
 	init_UART();
 	PHY_Init(); //initialise le wireless
 	PHY_SetRxState(1); //TRX_CMD_RX_ON+
-	init_buff_nom();
 }
 //
 
