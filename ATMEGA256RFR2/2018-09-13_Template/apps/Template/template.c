@@ -68,7 +68,8 @@
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
-
+//#define RECEIVER
+#define SENDER
 
 
 /*- Types ------------------------------------------------------------------*/
@@ -123,22 +124,64 @@ int main(void)
 	board_init();
 	TWI_init();
 	sei(); // Enable global interrupts
-	short temp[3] = {0,0,0};
+	//short temp[3] = {0,0,0};
 	SYS_Init();
-	char fuckoff[100] = {};
-	uint8_t received_data[100] = {};
-	uint8_t indice = 0;
+	//char fuckoff[100] = {};
+	//uint8_t received_data[100] = {};
+	//uint8_t indice = 0;
 	
+//
+	//
+	//while(1)
+	//{
+		////getTemperatureCelsius(temp);
+		////delay_ms(250);
+		//PHY_TaskHandler(); //stack wireless: va v�rifier s'il y a un paquet recu
+		//APP_TaskHandler(); //l'application principale roule ici
+	//}
+		//Initialize an empty patient object and the question form.
 
-	
-	while(1)
-	{
-		//getTemperatureCelsius(temp);
-		//delay_ms(250);
-		PHY_TaskHandler(); //stack wireless: va v�rifier s'il y a un paquet recu
-		APP_TaskHandler(); //l'application principale roule ici
-	}
-	
+		#ifdef SENDER
+		while(1)
+		{
+			PatientStruct patientInfo;
+			QuestionForm questionForm;
+			
+			//Sync the QuestionForm object with the current state of the patient info
+			InitQuestionForm(&questionForm, &patientInfo);
+			//Run the form, which acquires the informations if necessary.
+			do
+			RunQuestionForm(&questionForm);
+			while (!ValidateUserInput(&(questionForm.initiatorPatient)));
+
+			char inputPtr[84 * (sizeof(char))] = { 0 }; //questionForm.initiatorPatient.sizeOfStruct
+			serializePatient(&(questionForm.initiatorPatient), inputPtr);
+			Ecris_Wireless(inputPtr, 84);
+
+			Ecris_UART_string("\n\rEnvoi des informations via sans fil. En attente de la confirmation...");
+			char outputPtr[2] = { 0 };
+			receivedWirelessBLOQUANT(outputPtr);
+			if(*outputPtr == 1)
+				Ecris_UART_string("\n\rResultat de l'accuse de reception: Reussi");
+			else
+				Ecris_UART_string("\n\rResultat de l'accuse de reception: Erreur.");
+		}
+		#endif
+
+		#ifdef RECEIVER
+		while(1)
+		{
+			PatientStruct receivedPatient;
+
+			Ecris_UART_string("\n\rEn attente d'informations...\n\r");
+			char outputPtr[84 * (sizeof(char))] = { 0 };
+			receivedWirelessBLOQUANT(outputPtr);
+			deserializePatient(&receivedPatient, outputPtr);
+			bool receptionReussie = ValidateUserInput(&receivedPatient);
+			Ecris_Wireless(&receptionReussie,1);
+		}
+		#endif
+		return 0;
 }
 
 
