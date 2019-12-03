@@ -3,7 +3,6 @@ Microcontrolleur, FPGA et Antenne.
 
 # Architecture
 
-## Antenne
 ## Atmel
 ## FPGA
 
