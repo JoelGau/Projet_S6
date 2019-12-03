@@ -8,7 +8,24 @@
 //#include "../stdafx.h"
 #include "Form.h"
 #include "../includes/CUMmunication.h"
-//#include "Patient.h"
+#include "sys.h"
+#include "phy.h"
+#include "../includes/temperature.h"
+#include "../includes/at30ts.h"
+#include "../includes/CUMmunication.h"
+#include "../src/Formulaire/Form.h"
+
+#include "astudio/src/Formulaire/Form.h"
+#include "astudio/src/Formulaire/Patient.h"
+
+#include <stdint-gcc.h>
+#include <delay.h>
+#include <sysclk.h>
+#include <avr/interrupt.h>
+#include <stdio.h>
+#include <atmega256rfr2_xplained_pro/atmega256rfr2_xplained_pro.h>
+#include <atmega256rfr2_xplained_pro/led.h>
+#include <stdarg.h>
 
 //#include "astudio/includes/temperature.h"
 
@@ -562,7 +579,8 @@ void InquireTemperatureInfo(QuestionForm *q)
 	while(!TemperatureAcquired)
 	{
 		//Acquire the information
-		char inputTemp[10];// = lis_wireless_string();
+		char LisTemp[10] = {0};// = lis_wireless_string();
+		short temp[3] = {0,0,0};
 		uint8_t temperatureVal;
 		///////////////////////////
 		#ifdef FORM_CONSOLE_TEST
@@ -573,16 +591,22 @@ void InquireTemperatureInfo(QuestionForm *q)
 		#ifdef WRITE_UART
 // 		//When ready implement the next line.
 // 			getTemperatureCelsiusStd(&temperatureVal);
-			Ecris_UART_string("\n\rVeuillez entrer votre temperature(Celsius):");
-			uint8_t lengthInput = Lis_UART_string(inputTemp,0);
-			if(lengthInput != 0 && lengthInput < 4)
-			{
-				sscanf(inputTemp,"%d", &temperatureVal);
-				TemperatureAcquired = true;		
-			}
+			Ecris_UART_string("\n\rVeuillez poser un doigt sur le capteur de temperature, puis appuyer sur la touche 'ENTER'... ");
+			uint8_t lengthInput = Lis_UART_string(LisTemp,0);
+			getTemperatureCelsius(temp);
+			//delay_ms(250);
+
+			//sscanf(&(temp[1]),"%d", &temperatureVal);
+			TemperatureAcquired = true;
+
+			//if(lengthInput != 0 && lengthInput < 4)
+			//{
+				//sscanf(inputTemp,"%d", &temperatureVal);
+				//TemperatureAcquired = true;		
+			//}
 		#endif
 		//////////////////////////
-		NewTemperatureMeasurement(&(q->initiatorPatient.Temperature),temperatureVal);
+		NewTemperatureMeasurement(&(q->initiatorPatient.Temperature),temp[1]);//temperatureVal);
 		q->initiatorPatient.sizeOfStruct += q->initiatorPatient.Temperature.sizeOfStruct;
 	}
 }

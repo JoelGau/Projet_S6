@@ -120,26 +120,12 @@ static void APP_TaskHandler(void)
 *****************************************************************************/
 int main(void)
 {
-	//sysclk_init();
 	board_init();
 	TWI_init();
 	sei(); // Enable global interrupts
 	//short temp[3] = {0,0,0};
 	SYS_Init();
-	//char fuckoff[100] = {};
-	//uint8_t received_data[100] = {};
-	//uint8_t indice = 0;
-	
-//
-	//
-	//while(1)
-	//{
-		////getTemperatureCelsius(temp);
-		////delay_ms(250);
-		//PHY_TaskHandler(); //stack wireless: va v�rifier s'il y a un paquet recu
-		//APP_TaskHandler(); //l'application principale roule ici
-	//}
-		//Initialize an empty patient object and the question form.
+	//sysclk_init();
 
 		#ifdef SENDER
 		while(1)
