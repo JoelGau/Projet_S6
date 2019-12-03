@@ -136,6 +136,7 @@ int main(void)
 		indice =  Lis_UART_string(fuckoff, indice);
 		Ecris_Wireless(fuckoff, indice);
 		init_buff(fuckoff);
+		init_buff(received_data);
 		indice = 0;
 		
 		//Permet la reception d'un message via Wireless
