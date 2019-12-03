@@ -57,9 +57,9 @@ extern PHY_DataInd_t ind;
 		}
 	}
 	
-	Ecris_UART_string("\n\r");
-	Ecris_UART_string(buff);
-	Ecris_UART_string("\n\r");
+	//Ecris_UART_string("\n\r");
+	//Ecris_UART_string(buff);
+	//Ecris_UART_string("\n\r");
 	return ind_buff;
  }
 

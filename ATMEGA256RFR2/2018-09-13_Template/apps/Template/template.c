@@ -52,6 +52,9 @@
 #include "../includes/CUMmunication.h"
 #include "../src/Formulaire/Form.h"
 
+#include "astudio/src/Formulaire/Form.h"
+#include "astudio/src/Formulaire/Patient.h"
+
 #include <stdint-gcc.h>
 #include <delay.h>
 #include <sysclk.h>
@@ -65,6 +68,9 @@
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
+//#define RECEIVER
+#define SENDER
+
 
 /*- Types ------------------------------------------------------------------*/
 // Put your type definitions here
@@ -77,13 +83,12 @@ void SYS_Init(void);
 
 /*- Variables --------------------------------------------------------------*/
 // Put your variables here
-uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet aura été recu via wireless (et copié dans "PHY_DataInd_t ind"
-							//il faut la mettre a 0 apres avoir géré le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jeté
+uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet aura ï¿½tï¿½ recu via wireless (et copiï¿½ dans "PHY_DataInd_t ind"
+							//il faut la mettre a 0 apres avoir gï¿½rï¿½ le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jetï¿½
 char buff_nom[20] = {};
 uint8_t ind2 = 0;
 							
 // PoC envois chaine de charactere	(envoi just une chaine (un nom) pour l'instant)					
-
 
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
 
@@ -115,42 +120,54 @@ static void APP_TaskHandler(void)
 *****************************************************************************/
 int main(void)
 {
-	//sysclk_init();
 	board_init();
 	TWI_init();
 	sei(); // Enable global interrupts
-	short temp[3] = {0,0,0};
+	//short temp[3] = {0,0,0};
 	SYS_Init();
-	char fuckoff[100] = {};
-	uint8_t received_data[100] = {};
-	uint8_t indice = 0;
-	
+	//sysclk_init();
 
-	
-	while(1)
-	{
-		getTemperatureCelsius(temp);
-		delay_ms(250);
-		//fuckoff[0] = temp[1];
-		// permet l'envoi d'un message et la gestion des affichages
-		indice =  Lis_UART_string(fuckoff, indice);
-		Ecris_Wireless(fuckoff, indice);
-		init_buff(fuckoff);
-		init_buff(received_data);
-		indice = 0;
-		
-		//Permet la reception d'un message via Wireless
-		receivedWirelessBLOQUANT(received_data);
-
+		#ifdef SENDER
+		while(1)
+		{
+			PatientStruct patientInfo;
+			QuestionForm questionForm;
 			
-		// affiche le message recu
-		Ecris_UART_string("\n\r");
-		Ecris_UART_string(received_data);
-		//Ecris_UART_string("température recue: %d" , (uint8_t) received_data[0]);
-		Ecris_UART_string( "\n\rnew trame! size: %d, RSSI: %ddBm\n\r", ind.size, ind.rssi );
-		Ecris_UART_string("\n\r");		
-	}
-	
+			//Sync the QuestionForm object with the current state of the patient info
+			InitQuestionForm(&questionForm, &patientInfo);
+			//Run the form, which acquires the informations if necessary.
+			do
+			RunQuestionForm(&questionForm);
+			while (!ValidateUserInput(&(questionForm.initiatorPatient)));
+
+			char inputPtr[84 * (sizeof(char))] = { 0 }; //questionForm.initiatorPatient.sizeOfStruct
+			serializePatient(&(questionForm.initiatorPatient), inputPtr);
+			Ecris_Wireless(inputPtr, 84);
+
+			Ecris_UART_string("\n\rEnvoi des informations via sans fil. En attente de la confirmation...");
+			char outputPtr[2] = { 0 };
+			receivedWirelessBLOQUANT(outputPtr);
+			if(*outputPtr == 1)
+				Ecris_UART_string("\n\rResultat de l'accuse de reception: Reussi");
+			else
+				Ecris_UART_string("\n\rResultat de l'accuse de reception: Erreur.");
+		}
+		#endif
+
+		#ifdef RECEIVER
+		while(1)
+		{
+			PatientStruct receivedPatient;
+
+			Ecris_UART_string("\n\rEn attente d'informations...\n\r");
+			char outputPtr[84 * (sizeof(char))] = { 0 };
+			receivedWirelessBLOQUANT(outputPtr);
+			deserializePatient(&receivedPatient, outputPtr);
+			bool receptionReussie = ValidateUserInput(&receivedPatient);
+			Ecris_Wireless(&receptionReussie,1);
+		}
+		#endif
+		return 0;
 }
 
 

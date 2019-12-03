@@ -1,0 +1,6 @@
+﻿  Form.c
+c:\users\charles-frederick\desktop\repos\s6a19\projet_s6\formconsole\formconsole\formconsole\formulaire\form.c(101): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+c:\users\charles-frederick\desktop\repos\s6a19\projet_s6\formconsole\formconsole\formconsole\formulaire\form.c(243): warning C4244: 'function': conversion from 'float' to 'char', possible loss of data
+c:\users\charles-frederick\desktop\repos\s6a19\projet_s6\formconsole\formconsole\formconsole\formulaire\form.c(621): warning C4477: 'sscanf' : format string '%d' requires an argument of type 'int *', but variadic argument 1 has type 'char *'
+  c:\users\charles-frederick\desktop\repos\s6a19\projet_s6\formconsole\formconsole\formconsole\formulaire\form.c(621): note: consider using '%hhd' in the format string
+  FormConsole.vcxproj -> C:\Users\charles-frederick\Desktop\Repos\S6A19\Projet_S6\FormConsole\FormConsole\x64\Debug\FormConsole.exe
