@@ -8,6 +8,7 @@
 #include "Form.h"
 #include "Patient.h"
 #include "astudio/includes/temperature.h"
+#include "../../includes/CUMmunication.h"
 
 //Define FORM_CONSOLE_TEST to 1 when we want to test the console output/interactions
 //#define FORM_CONSOLE_TEST 1
@@ -273,6 +274,7 @@ void InquirePatientInfo(struct QuestionForm* q)
 	int b,c,d;
 	while(!NAMacquired)
 	{
+<<<<<<< HEAD
 		#ifdef FORM_CONSOLE_TEST
 			int rc = getLine("Veuillez indiquer votre numero d''assurance maladie:", inputArray, sizeof(inputArray));
 			if (rc == NO_INPUT) 
@@ -297,6 +299,14 @@ void InquirePatientInfo(struct QuestionForm* q)
 		#endif
 
 		
+=======
+		Ecris_UART_string("*************************************************");
+		Ecris_UART_string("\n\r Veuillez indiquer votre numero d''assurance maladie: ");
+		//Acquire the information
+		char* inputArray[100] = {0};
+		uint8_t* ind_Array = 0;
+		//Lis_UART_string(inputArray, ind_Array);
+>>>>>>> dev
 		if(strlen(inputArray) == 12)
 		{
 			strcpy(inputArray,q->initiatorPatient->ID);

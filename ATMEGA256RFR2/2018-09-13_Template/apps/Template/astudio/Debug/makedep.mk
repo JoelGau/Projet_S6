@@ -8,6 +8,8 @@
 
 src\at30ts.c
 
+src\CUMmunication.c
+
 src\Formulaire\Form.c
 
 src\Formulaire\Patient.c

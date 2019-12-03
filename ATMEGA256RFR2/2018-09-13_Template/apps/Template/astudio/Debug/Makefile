@@ -75,6 +75,7 @@ C_SRCS +=  \
 ../../../../phy/atmegarfr2/src/phy.c \
 ../../template.c \
 ../src/at30ts.c \
+../src/CUMmunication.c \
 ../src/Formulaire/Form.c \
 ../src/Formulaire/Patient.c \
 ../src/temperature.c \
@@ -93,6 +94,7 @@ OBJS +=  \
 stack/phy/atmegarfr2/src/phy.o \
 template.o \
 src/at30ts.o \
+src/CUMmunication.o \
 src/Formulaire/Form.o \
 src/Formulaire/Patient.o \
 src/temperature.o \
@@ -104,6 +106,7 @@ OBJS_AS_ARGS +=  \
 stack/phy/atmegarfr2/src/phy.o \
 template.o \
 src/at30ts.o \
+src/CUMmunication.o \
 src/Formulaire/Form.o \
 src/Formulaire/Patient.o \
 src/temperature.o \
@@ -115,6 +118,7 @@ C_DEPS +=  \
 stack/phy/atmegarfr2/src/phy.d \
 template.d \
 src/at30ts.d \
+src/CUMmunication.d \
 src/Formulaire/Form.d \
 src/Formulaire/Patient.d \
 src/temperature.d \
@@ -126,6 +130,7 @@ C_DEPS_AS_ARGS +=  \
 stack/phy/atmegarfr2/src/phy.d \
 template.d \
 src/at30ts.d \
+src/CUMmunication.d \
 src/Formulaire/Form.d \
 src/Formulaire/Patient.d \
 src/temperature.d \
@@ -162,6 +167,13 @@ stack/phy/atmegarfr2/src/phy.o: ../../../../phy/atmegarfr2/src/phy.c
 	
 
 src/at30ts.o: ../src/at30ts.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2 -DPLATFORM_XPLAINED_PRO_ATMEGA256RFR2 -DF_CPU=8000000 -DBOARD=ATMEGA256RFR2_XPLAINED_PRO  -I"../../../../hal/atmega256rfr2/inc" -I"../../../../phy/atmegarfr2/inc" -I"../../../../nwk/inc" -I"../../../../sys/inc" -I"../.." -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src/ASF/common/boards" -I"../src/ASF/mega/utils/preprocessor" -I"../src/ASF/mega/utils" -I"../src/ASF/common/utils" -I"../src/ASF/mega/boards" -I"../src/ASF/mega/boards/atmega256rfr2_xplained_pro" -I"../src/ASF/common/services/gpio" -I"../src/ASF/common/services/ioport" -I"../src" -I"../src/config" -I"../src/ASF/mega/drivers/cpu" -I"../src/ASF/mega/drivers/twi" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/delay" -I"../src/ASF/common/services/twi"  -O1 -fdata-sections -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g3 -Wall -mmcu=atmega256rfr2 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega256rfr2" -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/CUMmunication.o: ../src/CUMmunication.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2 -DPLATFORM_XPLAINED_PRO_ATMEGA256RFR2 -DF_CPU=8000000 -DBOARD=ATMEGA256RFR2_XPLAINED_PRO  -I"../../../../hal/atmega256rfr2/inc" -I"../../../../phy/atmegarfr2/inc" -I"../../../../nwk/inc" -I"../../../../sys/inc" -I"../.." -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src/ASF/common/boards" -I"../src/ASF/mega/utils/preprocessor" -I"../src/ASF/mega/utils" -I"../src/ASF/common/utils" -I"../src/ASF/mega/boards" -I"../src/ASF/mega/boards/atmega256rfr2_xplained_pro" -I"../src/ASF/common/services/gpio" -I"../src/ASF/common/services/ioport" -I"../src" -I"../src/config" -I"../src/ASF/mega/drivers/cpu" -I"../src/ASF/mega/drivers/twi" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/delay" -I"../src/ASF/common/services/twi"  -O1 -fdata-sections -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g3 -Wall -mmcu=atmega256rfr2 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega256rfr2" -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
