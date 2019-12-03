@@ -12,6 +12,7 @@
 //struct _MeasurementStruct, _PatientStruct;
 typedef struct _MeasurementStruct
 {
+	unsigned sizeOfStruct = sizeof(isInitialized)+sizeof(float)+32;
 	bool isInitialized;// = false;
 	char MeasName[32];
 	float MeasVal;
@@ -27,10 +28,15 @@ typedef struct _PatientStruct
 	
 	//Measurements stored. Should not initialy have values before the form requires it.
 	MeasurementStruct* Temperature;
+	unsigned sizeOfStruct = sizeof(isInitialized)+2*sizeof(Age)+12+32;
 	
 } PatientStruct;
 
-unsigned NewTemperatureMeasurement(MeasurementStruct* input, float inputVal);
-unsigned NewPatient(PatientStruct* input, char* inputName, char* inputID, unsigned inputAge, unsigned inputWeight);
+unsigned NewTemperatureMeasurement(struct MeasurementStruct* input, float inputVal);
+unsigned NewPatient(struct PatientStruct* input, char* inputName, char* inputID, unsigned inputAge, unsigned inputWeight);
 
+unsigned serializePatient(struct PatientStruct patientStruct, char* serializedPtr);
+unsigned deserializePatient(struct PatientStruct* patientStruct, char* serializedPtr);
+unsigned serializeMeasurementTemperature(struct MeasurementStruct measurementStruct, char* serializedPtr, unsigned currentIndex);
+unsigned deserializeMeasurementTemperature(struct MeasurementStruct* measurementStruct, char* serializedPtr, unsigned currentIndex);
 #endif /* PATIENT_H_ */

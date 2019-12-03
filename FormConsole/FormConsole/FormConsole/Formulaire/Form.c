@@ -5,18 +5,21 @@
  *  Author: charles-frederick
  */ 
 
+//#include "../stdafx.h"
 #include "Form.h"
-#include "Patient.h"
-#include "astudio/includes/temperature.h"
+//#include "Patient.h"
+
+//#include "astudio/includes/temperature.h"
 
 //Define FORM_CONSOLE_TEST to 1 when we want to test the console output/interactions
-//#define FORM_CONSOLE_TEST 1
-#define  WRITE_UART 1
+#define FORM_CONSOLE_TEST 1
+//#define  WRITE_UART 1
 //#define  WRITE_WIRELESS 1
 
-#include <stdbool.h>
+//#include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
+
 /*
 QuestionForm::QuestionForm(PatientStruct* inputPatient)
 {
@@ -67,6 +70,25 @@ void main()
 #define NO_INPUT 1
 #define TOO_LONG 2
 
+int size(char *ptr)
+{
+	//variable used to access the subsequent array elements.
+	int offset = 0;
+	//variable that counts the number of elements in your array
+	int count = 0;
+
+	//While loop that tests whether the end of the array has been reached
+	while (*(ptr + offset) != '\0')
+	{
+		//increment the count variable
+		++count;
+		//advance to the next element of the array
+		++offset;
+	}
+	//return the size of the array
+	return count;
+}
+
 static int getLine (char *prmpt, char *buff, size_t sz) 
 {
 	int ch, extra;
@@ -93,10 +115,10 @@ static int getLine (char *prmpt, char *buff, size_t sz)
 	return OK;
 }
 
-void InitQuestionForm(struct QuestionForm *q, PatientStruct *p)
+int InitQuestionForm(QuestionForm *q, PatientStruct *p)
 {
 	//Acquire the patient struct used to create the appropriate form
-	q->initiatorPatient = p;
+	q->initiatorPatient = *p;
 	
 	if(p->isInitialized == true)
 	{
@@ -110,7 +132,7 @@ void InitQuestionForm(struct QuestionForm *q, PatientStruct *p)
 	}
 	
 	//Inquire for the temperature data
-	if(p->Temperature.isInitialized == true)
+	if(q->initiatorPatient.Temperature.isInitialized == true)
 	{
 		//Already has temperature values, which is odd.
 		q->hasTemperatureInfo = true;
@@ -120,6 +142,7 @@ void InitQuestionForm(struct QuestionForm *q, PatientStruct *p)
 		//Do not have temperature values, flag for acquisition
 		q->hasTemperatureInfo = false;
 	}
+	return 0;
 }
 /*
 unsigned QuestionForm::Run()
@@ -142,7 +165,7 @@ unsigned QuestionForm::Run()
 	
 }*/
 
-void RunQuestionForm(struct QuestionForm* q)
+void RunQuestionForm(QuestionForm* q)
 {
 	if(q->hasPatientInfo)
 	{
@@ -158,9 +181,8 @@ void RunQuestionForm(struct QuestionForm* q)
 	}
 	else
 	{
-		InquirePatientInfo(q);
 		#ifdef FORM_CONSOLE_TEST
-			printf("Dossier client a remplir.");
+			printf("Dossier client a remplir.\n");
 		#endif
 		#ifdef WRITE_WIRELESS
 			//Ecris_wireless_string("Dossier client a remplir.");
@@ -168,21 +190,10 @@ void RunQuestionForm(struct QuestionForm* q)
 		#ifdef WRITE_UART
 			Ecris_UART_string("Dossier client a remplir.");
 		#endif
+		InquirePatientInfo(q);
 	}
 	
 	if(q->hasTemperatureInfo)
-	{
-		#ifdef FORM_CONSOLE_TEST
-			printf("Temperature deja prise (Wut).");
-		#endif
-		#ifdef WRITE_WIRELESS
-			//Ecris_wireless_string("Temperature deja prise (Wut).");
-		#endif
-		#ifdef WRITE_UART
-			Ecris_UART_string("Temperature deja prise (Wut).");
-		#endif
-	}
-	else
 	{
 		InquireTemperatureInfo(q);
 		#ifdef FORM_CONSOLE_TEST
@@ -192,9 +203,118 @@ void RunQuestionForm(struct QuestionForm* q)
 			//Ecris_wireless_string("Temperature acquise.");
 		#endif
 		#ifdef WRITE_UART
-		Ecris_UART_string("Temperature deja prise (Wut).");
+			Ecris_UART_string("Temperature deja prise (Wut).");
 		#endif
 	}
+	else
+	{
+		#ifdef FORM_CONSOLE_TEST
+			bool hasTemperature = false;
+			while(!hasTemperature)
+			{
+				//Acquire the information
+				char inputTemp[10];// = lis_wireless_string();
+				///////////////////////////
+				#ifdef FORM_CONSOLE_TEST
+				int rc = getLine("Veuillez indiquer votre temperature (Celsius):", inputTemp, sizeof(inputTemp));
+				if (rc == NO_INPUT)
+				{
+					// Extra NL since my system doesn't output that on EOF.
+					printf ("\nNo input\n");
+				}
+			
+				if (rc == TOO_LONG)
+				{
+					printf("Input too long [%s]\n", inputTemp);
+				}
+			
+				printf ("OK [%s]\n", inputTemp);
+				#endif
+				#ifdef WRITE_WIRELESS
+					//Ecris_wireless_string("Veuillez indiquer votre age:");
+					//inputAge = 0;//lis_wireless_string();
+				#endif
+				//////////////////////////
+			
+				if(strlen(inputTemp) <= 10)
+				{
+					float temp = 0;
+					sscanf(inputTemp,"%f", &temp);
+					NewTemperatureMeasurement(&(q->initiatorPatient.Temperature), temp);
+					hasTemperature = true;
+				}
+				else
+					#ifdef FORM_CONSOLE_TEST
+								printf("Temperature invalide.");
+					#endif
+					#ifdef WRITE_WIRELESS
+							a = 1;
+							//Ecris_wireless_string("Numero invalide.\n");
+					#endif
+					#ifdef WRITE_UART
+							Ecris_UART_string("Temperature deja prise (Wut).");
+					#endif
+				//Ecris_wireless_string("Age invalide (3 caracteres maximum).\n");
+			}
+		#endif
+	}
+}
+bool ValidateUserInput(PatientStruct * p)
+{
+	//Here we print out the patient information to confirm the entered data, if there is a problem offer to reset.
+	char inputArray[2];
+	#ifdef FORM_CONSOLE_TEST
+		printf("\n-------------------------------------------------\nLes informations suivantes sont-elles correctes?\n");
+		printf("NAS:\t%.*s\n", 12, p->ID);
+		printf("Nom:\t%s\n", p->Name);
+		printf("Age:\t%u\n", p->Age);
+		printf("Poids:\t%u\n", p->Weight);
+		printf("Temp:\t%d\n-------------------------------------------------\n", (uint8_t)p->Temperature.MeasVal);
+
+		bool inputOK = false;
+		while(!inputOK)
+		{
+			int rc = getLine("Correct? (Y/N)", inputArray, sizeof(inputArray));
+			if (rc == NO_INPUT) 
+			{
+				// Extra NL since my system doesn't output that on EOF.
+				printf ("\nNo input\n");
+			}
+
+			if (rc == TOO_LONG)
+			{
+				printf("Input too long [%s]\n", inputArray);
+			}
+			printf ("OK [%s]\n", inputArray);
+
+			if(strlen(inputArray) == 1 && (inputArray[0] == 'Y'|| inputArray[0] == 'N'))
+			{
+				inputOK = true;
+			}
+			else
+			{
+				printf("Reponse invalide.");
+			}			
+		}
+		if (inputArray[0] == 'Y')
+		{
+			p->sizeOfStruct = sizeof(p->isInitialized) + 2 * sizeof(p->Age) + 12 + 32;
+			return true;
+		}
+		else if (inputArray[0] == 'N')
+			return false;
+		else
+		{
+			printf("WutAnswer?");
+			return false;
+		}
+	#endif
+	#ifdef WRITE_WIRELESS
+		//Ecris_wireless_string("Temperature acquise.");
+	#endif
+	#ifdef WRITE_UART
+		Ecris_UART_string("Les informations suivantes sont-elles correctes?");
+	#endif
 }
 /*
  void QuestionForm::inquirePatientInfo()
@@ -265,12 +385,11 @@ void RunQuestionForm(struct QuestionForm* q)
 	}
 }
 */
-void InquirePatientInfo(struct QuestionForm* q)
+void InquirePatientInfo(QuestionForm* q)
 {
 	//This function is in charge of acquiring the generic patient information to fill the profile.
 	bool NAMacquired = false;
-	char inputArray[12];
-	int b,c,d;
+	char inputArray[20];
 	while(!NAMacquired)
 	{
 		#ifdef FORM_CONSOLE_TEST
@@ -283,7 +402,7 @@ void InquirePatientInfo(struct QuestionForm* q)
 
 			if (rc == TOO_LONG)
 			{
-				printf ("Input too long [%s]\n", inputArray);
+				printf("Input too long [%s]\n", inputArray);
 			}
 
 			printf ("OK [%s]\n", inputArray);
@@ -296,10 +415,10 @@ void InquirePatientInfo(struct QuestionForm* q)
 			Ecris_UART_string("Temperature deja prise (Wut).");
 		#endif
 
-		
+		//printf("%d", size(inputArray));
 		if(strlen(inputArray) == 12)
 		{
-			strcpy(inputArray,q->initiatorPatient->ID);
+			strcpy(q->initiatorPatient.ID, inputArray);
 			NAMacquired = true;
 		}
 		else
@@ -312,7 +431,7 @@ void InquirePatientInfo(struct QuestionForm* q)
 				//Ecris_wireless_string("Numero invalide.\n");
 			#endif
 			#ifdef WRITE_UART
-				Ecris_UART_string("Temperature deja prise (Wut).");
+				Ecris_UART_string("Numero invalide.");
 			#endif
 		}			
 	}
@@ -333,7 +452,7 @@ void InquirePatientInfo(struct QuestionForm* q)
 
 			if (rc == TOO_LONG)
 			{
-				printf ("Input too long [%s]\n", inputName);
+				printf("Input too long [%s]\n", inputName);
 			}
 
 			printf ("OK [%s]\n", inputName);
@@ -351,11 +470,20 @@ void InquirePatientInfo(struct QuestionForm* q)
 		//char* inputArray = 0;//lis_wireless_string();
 		if(strlen(inputName) <= 32)
 		{
-			strcpy(inputName,q->initiatorPatient->Name);
+			strcpy(q->initiatorPatient.Name, inputName);
 			NameAcquired = true;
 		}
 		else
-			b = 1;
+			#ifdef FORM_CONSOLE_TEST
+						printf("Nom invalide (trop long).");
+			#endif
+			#ifdef WRITE_WIRELESS
+					a = 1;
+					//Ecris_wireless_string("Numero invalide.\n");
+			#endif
+			#ifdef WRITE_UART
+					Ecris_UART_string("Temperature deja prise (Wut).");
+			#endif
 		//Ecris_wireless_string("Nom invalide (32 caracteres maximum).\n");
 	}
 	
@@ -375,7 +503,7 @@ void InquirePatientInfo(struct QuestionForm* q)
 
 		if (rc == TOO_LONG)
 		{
-			printf ("Input too long [%s]\n", inputAge);
+			printf("Input too long [%s]\n", inputAge);
 		}
 
 		printf ("OK [%s]\n", inputAge);
@@ -390,11 +518,20 @@ void InquirePatientInfo(struct QuestionForm* q)
 		{
 			unsigned age = 0;
 			sscanf(inputAge,"%d", &age);
-			q->initiatorPatient->Age = age;
+			q->initiatorPatient.Age = age;
 			AgeAcquired = true;
 		}
 		else
-			c = 1;
+			#ifdef FORM_CONSOLE_TEST
+						printf("Age invalide.");
+			#endif
+			#ifdef WRITE_WIRELESS
+					a = 1;
+					//Ecris_wireless_string("Numero invalide.\n");
+			#endif
+			#ifdef WRITE_UART
+					Ecris_UART_string("Temperature deja prise (Wut).");
+			#endif
 		//Ecris_wireless_string("Age invalide (3 caracteres maximum).\n");
 	}
 
@@ -403,10 +540,10 @@ void InquirePatientInfo(struct QuestionForm* q)
 	{
 
 		//Acquire the information
-		char inputWeight[4];// = lis_wireless_string();
+		char inputWeight[20];// = lis_wireless_string();
 		///////////////////////////
 		#ifdef FORM_CONSOLE_TEST
-			int rc = getLine("Veuillez indiquer votre age:", inputWeight, sizeof(inputWeight));
+			int rc = getLine("Veuillez indiquer votre poids (lbs):", inputWeight, sizeof(inputWeight));
 			if (rc == NO_INPUT)
 			{
 				// Extra NL since my system doesn't output that on EOF.
@@ -415,7 +552,7 @@ void InquirePatientInfo(struct QuestionForm* q)
 
 			if (rc == TOO_LONG)
 			{
-				printf ("Input too long [%s]\n", inputWeight);
+				printf("Input too long [%s]\n", inputWeight);
 			}
 
 			printf ("OK [%s]\n", inputWeight);
@@ -430,11 +567,20 @@ void InquirePatientInfo(struct QuestionForm* q)
 		{
 			unsigned weight = 0;
 			sscanf(inputWeight,"%d", &weight);
-			q->initiatorPatient->Weight = weight;
+			q->initiatorPatient.Weight = weight;
 			WeightAcquired = true;
 		}
 		else
-			d = 1;
+			#ifdef FORM_CONSOLE_TEST
+				printf("Poids invalide.");
+			#endif
+			#ifdef WRITE_WIRELESS
+				a = 1;
+				//Ecris_wireless_string("Numero invalide.\n");
+			#endif
+			#ifdef WRITE_UART
+				Ecris_UART_string("Temperature deja prise (Wut).");
+			#endif
 		//Ecris_wireless_string("Poids invalide (3 caracteres maximum).\n");
 	}	
 }
@@ -459,7 +605,7 @@ void QuestionForm::inquireTemperatureInfo()
 }
 */
 
-void InquireTemperatureInfo(struct QuestionForm *q)
+void InquireTemperatureInfo(QuestionForm *q)
 {
 	//This function is in charge of acquiring the patient's temperature information to fill the profile.
 
@@ -468,21 +614,23 @@ void InquireTemperatureInfo(struct QuestionForm *q)
 	{
 		//Acquire the information
 		char inputTemp[3];// = lis_wireless_string();
-		float temperatureVal = 0;
+		char temperatureVal = 0;
 		///////////////////////////
 		#ifdef FORM_CONSOLE_TEST
 			printf("Veuillez entrer votre temperature en valeur decimale:");
-			sscanf(inputTemp,"%f", &temperatureVal);
+			sscanf(inputTemp,"%d", &temperatureVal);
 		#endif
 		#ifdef WRITE_WIRELESS
 			//Ecris_wireless_string("Veuillez mettre votre doigts sur le capteur et appuyez sur Enter");
 			
 			getTemperatureCelsiusStd(&temperatureVal);
 		#endif
+		#ifdef WRITE_UART
+
+		#endif
 		//////////////////////////
-		
 		TemperatureAcquired = true;		
-		NewTemperatureMeasurement(q->initiatorPatient->Temperature,temperatureVal);
-		q->initiatorPatient->sizeOfStruct += q->initiatorPatient->Temperature.sizeOfStruct;
+		NewTemperatureMeasurement(&(q->initiatorPatient.Temperature),temperatureVal);
+		q->initiatorPatient.sizeOfStruct += q->initiatorPatient.Temperature.sizeOfStruct;
 	}
 }

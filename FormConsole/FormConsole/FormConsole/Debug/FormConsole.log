@@ -1,0 +1,5 @@
+﻿  FormConsole.cpp
+  Form.c
+FormConsole.obj : error LNK2019: unresolved external symbol "void __cdecl InitQuestionForm(struct _QuestionForm *,struct _PatientStruct *)" (?InitQuestionForm@@YAXPAU_QuestionForm@@PAU_PatientStruct@@@Z) referenced in function _main
+FormConsole.obj : error LNK2019: unresolved external symbol "void __cdecl RunQuestionForm(struct _QuestionForm *)" (?RunQuestionForm@@YAXPAU_QuestionForm@@@Z) referenced in function _main
+C:\Users\charles-frederick\Desktop\Repos\S6A19\Projet_S6\FormConsole\FormConsole\Debug\FormConsole.exe : fatal error LNK1120: 2 unresolved externals

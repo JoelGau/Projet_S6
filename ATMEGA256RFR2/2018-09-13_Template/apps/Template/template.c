@@ -78,7 +78,7 @@
 // Put your function prototypes here
 char Lis_UART();
 void Ecris_UART(char data);
-void Ecris_UART_string(char const * data, ...);
+void Ecris_UART_string(const char * data, ...);
 void init_UART(void);
 void Lis_UART_string(void);
 void SYS_Init(void);
