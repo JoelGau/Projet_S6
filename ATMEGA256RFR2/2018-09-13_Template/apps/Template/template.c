@@ -131,10 +131,10 @@ int main(void)
 	{
 		getTemperatureCelsius(temp);
 		delay_ms(250);
-		fuckoff[0] = temp[1];
+		//fuckoff[0] = temp[1];
 		// permet l'envoi d'un message et la gestion des affichages
-		//indice =  Lis_UART_string(fuckoff, indice);
-		Ecris_Wireless(fuckoff, 1);
+		indice =  Lis_UART_string(fuckoff, indice);
+		Ecris_Wireless(fuckoff, indice);
 		init_buff(fuckoff);
 		indice = 0;
 		
@@ -144,7 +144,8 @@ int main(void)
 			
 		// affiche le message recu
 		Ecris_UART_string("\n\r");
-		Ecris_UART_string("température recue: %d" , (uint8_t) received_data[0]);
+		Ecris_UART_string(received_data);
+		//Ecris_UART_string("température recue: %d" , (uint8_t) received_data[0]);
 		Ecris_UART_string( "\n\rnew trame! size: %d, RSSI: %ddBm\n\r", ind.size, ind.rssi );
 		Ecris_UART_string("\n\r");		
 	}
